@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="Toolbar">
+        <attr name="toolbarLeftImage" format="reference"/>
+        <attr name="toolbarCenterImage" format="reference"/>
+        <attr name="toolbarRightImage" format="reference"/>
+    </declare-styleable>
+    <declare-styleable name="ToolbarView">Toolbar</declare-styleable>
+    <declare-styleable name="BottomBar">
+        <attr name="cartIcon" format="reference"/>
+        <attr name="middleText" format="string"/>
+        <attr name="itemsNumber" format="string"/>
+    </declare-styleable>
+</resources>

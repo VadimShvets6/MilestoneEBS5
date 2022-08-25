@@ -1,0 +1,99 @@
+package com.top1shvetsvadim1.presentation.main
+
+import android.os.Bundle
+import android.view.LayoutInflater
+import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
+import com.top1shvetsvadim1.coreui.Colors
+import com.top1shvetsvadim1.coreutils.BaseFragment
+import com.top1shvetsvadim1.presentation.databinding.FragmentMainBinding
+import com.top1shvetsvadim1.presentation.main.adapter.ProductAdapter
+import com.top1shvetsvadim1.presentation.mvi.MainEvent
+import com.top1shvetsvadim1.presentation.mvi.MainIntent
+import com.top1shvetsvadim1.presentation.mvi.MainState
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
+
+@AndroidEntryPoint
+class MainFragment : BaseFragment<MainState, MainEvent, MainViewModel, FragmentMainBinding>() {
+
+    override val viewModel: MainViewModel by viewModels()
+
+    private val productAdapter by lazy {
+        ProductAdapter(::onProductClicked)
+    }
+
+    private fun onProductClicked(action: ProductAdapter.ActionProductAdapter) {
+        when (action) {
+            is ProductAdapter.ActionProductAdapter.OnProductClicked -> findNavController().navigate(
+                MainFragmentDirections.actionMainFragmentToDetailFragment(action.productItem.id)
+            )
+            is ProductAdapter.ActionProductAdapter.OnProductFavoriteClicked ->
+                if (action.setFavorite) {
+                    viewModel.handleAction(MainIntent.AddItemToFavorite(action.id))
+                } else {
+                    viewModel.handleAction(MainIntent.RemoveItemFromFavorite(action.id))
+                }
+        }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel.handleAction(MainIntent.LoadItems)
+    }
+
+    override fun getViewBinding(inflater: LayoutInflater): FragmentMainBinding {
+        return FragmentMainBinding.inflate(inflater)
+    }
+
+    override fun setupViews() {
+        binding.progressBar.isVisible = false
+        binding.rvProductList.adapter = productAdapter
+    }
+
+    override fun handleEffect(effect: MainEvent) {
+        when (effect) {
+            MainEvent.GeneralException -> {
+                binding.tvError.isVisible = true
+                binding.progressBar.isVisible = false
+            }
+            MainEvent.ShowNoInternet -> {
+                Snackbar.make(binding.root, "No internet connection", Snackbar.LENGTH_LONG)
+                    .setBackgroundTint(ContextCompat.getColor(requireActivity(), Colors.color_main_07195C))
+                    .setTextColor(ContextCompat.getColor(requireActivity(), Colors.white))
+                    .show()
+                lifecycleScope.launch(Dispatchers.Main) {
+                    delay(10000)
+                    binding.progressBar.isVisible = false
+                    binding.buttonTryAgain.apply {
+                        isVisible = true
+                        setOnClickListener {
+                            viewModel.handleAction(MainIntent.LoadItems)
+                            binding.buttonTryAgain.isVisible = false
+                            binding.progressBar.isVisible = true
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    override fun render(state: MainState) {
+        binding.progressBar.isVisible = state.isLoading
+        lifecycleScope.launchWhenResumed {
+            state.items.collectLatest {
+                productAdapter.submitList(it)
+            }
+        }
+        binding.toolbar.setClickOnRightImage {
+            findNavController().navigate(MainFragmentDirections.actionMainFragmentToFavoriteFragment())
+        }
+    }
+}

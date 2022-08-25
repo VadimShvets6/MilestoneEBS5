@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/black"
+    android:backgroundTint="@color/white"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <View
+            android:layout_marginStart="@dimen/_12sdp"
+            android:layout_marginEnd="@dimen/_12sdp"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:background="#E5EBE9"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"/>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/ivProduct"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:layout_marginStart="@dimen/_12sdp"
+                android:contentDescription="@string/app_name"
+                android:layout_width="@dimen/_93sdp"
+                android:layout_height="@dimen/_68sdp"/>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:layout_marginBottom="@dimen/_9sdp"
+                android:layout_marginStart="@dimen/_12sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tvProductName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/_14ssp"
+                    android:textStyle="bold"
+                    tools:text="Apple Iphone 11"
+                    android:textColor="@color/color_main_07195C"
+                    android:fontFamily="@font/open_sans_extrabold" />
+
+                <TextView
+                    android:id="@+id/tvSize"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/_11ssp"
+                    android:layout_marginTop="@dimen/_6sdp"
+                    android:maxLines="2"
+                    android:ellipsize="end"
+                    tools:text="iOS, 5.5, GPS, 256 GB, 12 mpx"
+                    android:textColor="#424A56"
+                    android:fontFamily="@font/open_sans_regular" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_marginTop="@dimen/_6sdp"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tvPrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/open_sans_semibold"
+                        android:textSize="@dimen/_12ssp"
+                        android:textColor="#035A97"
+                        tools:text="$ 980,-"/>
+
+                    <TextView
+                        android:id="@+id/tvSmallPrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/open_sans_semibold"
+                        android:textSize="@dimen/_9ssp"
+                        android:layout_gravity="top"
+                        android:gravity="top"
+                        android:textColor="#9CB1BC"
+                        android:layout_marginStart="@dimen/_6sdp"
+                        tools:text="$ 980,-"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginTop="@dimen/_12sdp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_32sdp">
+
+                    <ImageButton
+                        android:id="@+id/buttonHeart"
+                        android:elevation="@dimen/_1sdp"
+                        android:padding="@dimen/_4sdp"
+                        android:src="@drawable/ic_icon_heart"
+                        android:contentDescription="@string/app_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/hear_button"/>
+
+                    <ImageButton
+                        android:id="@+id/buttonBasket"
+                        android:elevation="@dimen/_1sdp"
+                        android:padding="@dimen/_6sdp"
+                        android:contentDescription="@string/app_name"
+                        android:layout_marginStart="@dimen/_25sdp"
+                        android:layout_width="wrap_content"
+                        android:layout_gravity="end"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/hear_button"
+                        android:src="@drawable/ic_basket"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
