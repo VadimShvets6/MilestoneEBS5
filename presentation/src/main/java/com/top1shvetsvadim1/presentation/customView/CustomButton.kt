@@ -11,11 +11,13 @@ import com.top1shvetsvadim1.presentation.databinding.CustomButtonBinding
 class CustomButton @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0,
 ) : ConstraintLayout(context, attrs, defStyleAttr) {
+    //TODO: very bad code formatting!!!
     private val viewBinding =
     CustomButtonBinding.inflate(
     LayoutInflater.from(context), this,
     true
     )
+
 
     init {
         attrs?.let {
@@ -30,6 +32,7 @@ class CustomButton @JvmOverloads constructor(
         viewBinding.apply {
             cartButtonInBottomBar.setImageResource(
                 attr.getResourceId(
+                    //TODO: replace com.top1shvetsvadim1.coreui.R.styleable with Stylable
                     com.top1shvetsvadim1.coreui.R.styleable.CustomButton_leftImage,
                     com.top1shvetsvadim1.coreui.R.drawable.ic_buschet
                 )
@@ -38,6 +41,7 @@ class CustomButton @JvmOverloads constructor(
             cartText.text = attr.getString(com.top1shvetsvadim1.coreui.R.styleable.CustomButton_rightImage)
 
         }
+        //TODO: typed array is not recycled
     }
 
     private fun getTypedArray(

@@ -38,7 +38,7 @@ class ProductDelegate : ItemDelegate<ProductUIModel, ProductDelegate.FavoriteVie
                 }
             }
         }
-
+        //TODO: you should call setOnClickListeners at the end of onBindViewHolder (primitive copies)
     }
 
     inner class FavoriteViewHolder(private val binding: ProductItemBinding) :
@@ -75,6 +75,7 @@ class ProductDelegate : ItemDelegate<ProductUIModel, ProductDelegate.FavoriteVie
         }
 
         fun setFavorite(favorite: Boolean) {
+            //TODO: replace with selector
             if (favorite) {
                 binding.buttonHeart.load(Drawable.ic_favorite_main)
             } else {
@@ -87,6 +88,7 @@ class ProductDelegate : ItemDelegate<ProductUIModel, ProductDelegate.FavoriteVie
         }
     }
 
+    //TODO: bad code formatting
     sealed interface ActionProductAdapter : Action {
         data class OnProductFavoriteClicked(val id: Int, val setFavorite: Boolean) :
             ActionProductAdapter

@@ -19,6 +19,7 @@ interface ApiService {
         @Path("id") id: Int
     ): ProductItemDTO
 
+    //TODO: do not use const strings in annotations, that causes harder debugging and code understanding.
     companion object {
         private const val QUERY_PARAM_PAGE = "page"
         private const val QUERY_PARAM_PAGE_SIZE = "page_size"

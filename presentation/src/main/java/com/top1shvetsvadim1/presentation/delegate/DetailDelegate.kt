@@ -34,6 +34,7 @@ class ImageDelegate :
         if (payloads.isNullOrEmpty()) {
             super.onBindViewHolder(holder, item, payload)
         } else {
+            //TODO: in delegates you should explicitly cast payloads
             payloads.forEach {
                 when (it) {
                     is ImageUIModel.ImagePayloads -> when (it) {
@@ -44,6 +45,7 @@ class ImageDelegate :
         }
     }
 
+    //TODO: bad code style
     inner class ImageDetailViewHolder(private val binding: ImageDetailItemBinding) :
         BaseViewHolder<ImageUIModel>(binding) {
         override fun bind(item: ImageUIModel) {
@@ -55,7 +57,7 @@ class ImageDelegate :
         }
     }
 }
-
+//TODO: delegates should be in separate classes with their UI models
 class DetailProductDelegate :
     ItemDelegate<DetailProductUIModel, DetailProductDelegate.DetailProductViewHolder>(
         DetailProductUIModel::class,
@@ -70,6 +72,7 @@ class DetailProductDelegate :
         item: DetailProductUIModel,
         payload: MutableList<Any>
     ) {
+        //TODO: suppress warning
         val payloads = payload.firstOrNull() as List<Payloadable>?
 
         if (payloads.isNullOrEmpty()) {

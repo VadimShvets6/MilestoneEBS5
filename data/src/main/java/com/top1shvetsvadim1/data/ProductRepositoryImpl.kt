@@ -71,6 +71,7 @@ class ProductRepositoryImpl @Inject constructor(
         }
     }
 
+    //TODO: remove unused logs
     override suspend fun changeStateItem(id: Int) {
         when (favoriteItemDao.getFavoriteList().first().map { it.id }.contains(id)) {
             true -> {
@@ -84,6 +85,7 @@ class ProductRepositoryImpl @Inject constructor(
         }
     }
 
+    //TODO: Ctrl + alt + L. Next time will finish code review after the first formatting issue.
     override suspend fun checkIfElementIsFavorite(id: Int) : Flow<Boolean> {
        return favoriteItemDao.getFavoriteList().map { it.map { it.id }.contains(id) }
     }

@@ -30,6 +30,7 @@ class ToolbarView @JvmOverloads constructor(
             getTypedArray(context, attrs, Stylable.Toolbar)
 
         viewBinding.apply {
+            //TODO: check case: if there are no value for field, does it work correct.
             leftIcon.setImageResource(
                 attr.getResourceId(
                     com.top1shvetsvadim1.coreui.R.styleable.Toolbar_toolbarLeftImage,
@@ -50,8 +51,10 @@ class ToolbarView @JvmOverloads constructor(
             )
 
         }
+        //TODO: typed array is not recycled
     }
 
+    //TODO: code formatting
     fun setRightImage(image : Int){
         viewBinding.rightIcon.setImageResource(image)
     }
@@ -76,6 +79,7 @@ class ToolbarView @JvmOverloads constructor(
         return viewBinding.rightIcon.isActivated
     }
 
+    //TODO: this function can be moved to core UI
     private fun getTypedArray(
         context: Context,
         attributeSet: AttributeSet,

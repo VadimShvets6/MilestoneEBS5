@@ -25,6 +25,7 @@ interface UseCase<PARAM : Any, RETURN : Any> {
     suspend operator fun invoke(params: PARAM): RETURN
 }
 
+//TODO: unused
 abstract class ItemViewHolder<I : BaseUIModel>(binding: ViewBinding) :
     RecyclerView.ViewHolder(binding.root) {
     abstract fun bind(item: I)

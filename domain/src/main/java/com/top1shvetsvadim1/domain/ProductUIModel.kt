@@ -29,6 +29,7 @@ data class ProductUIModel(
 
     override fun changePayload(other: BaseUIModel): Any {
         return mutableListOf<Payloadable>().apply {
+            //TODO: not exhaustive payloads. This will lead to misbehaviour on big lists.
             if (other is ProductUIModel) {
                 if (other.name != name) {
                     add(ProductPayload.NameChanged(other.name))

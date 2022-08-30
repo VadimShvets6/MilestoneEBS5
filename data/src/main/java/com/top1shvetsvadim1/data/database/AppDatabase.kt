@@ -6,7 +6,7 @@ import com.top1shvetsvadim1.domain.ProductEntity
 
 @Database(
     entities = [ProductEntity::class],
-    version = 4,
+    version = 4, //TODO: version 4, however there are no migrations
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {

@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import kotlin.reflect.KClass
 
+//TODO: move to Core UI
 class BaseAdapter private constructor(private val delegates: List<ItemDelegate<BaseUIModel, BaseViewHolder<BaseUIModel>>>) :
     ListAdapter<BaseUIModel, BaseViewHolder<BaseUIModel>>(DefaultDiffUtil(delegates)) {
 
@@ -16,6 +17,7 @@ class BaseAdapter private constructor(private val delegates: List<ItemDelegate<B
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<BaseUIModel> {
+        //TODO: hope you've understood what you done, 'cause I see copied functions from Delegate Adapter
         return delegates[viewType].getOrCreateViewHolder(
             LayoutInflater.from(parent.context),
             parent
@@ -41,6 +43,7 @@ class BaseAdapter private constructor(private val delegates: List<ItemDelegate<B
         private val delegates: MutableList<ItemDelegate<BaseUIModel, BaseViewHolder<BaseUIModel>>> =
             mutableListOf()
 
+        //TODO: hope you've understood what you done, 'cause I see copied functions from Delegate Adapter
         fun setDelegates(vararg delegate: ItemDelegate<out BaseUIModel, out BaseViewHolder<out BaseUIModel>>): Builder {
             delegate.forEach {
                 delegates.add(it as ItemDelegate<BaseUIModel, BaseViewHolder<BaseUIModel>>)
@@ -55,13 +58,15 @@ class BaseAdapter private constructor(private val delegates: List<ItemDelegate<B
             return this
         }
 
+        //TODO: hope you've understood what you done, 'cause I see copied functions from Delegate Adapter
         fun buildIn() = lazy(LazyThreadSafetyMode.SYNCHRONIZED) { BaseAdapter(delegates) }
     }
 }
 
-
+//TODO: hope you've understood what you done, 'cause I see copied functions from Delegate Adapter
 abstract class ItemDelegate<T : BaseUIModel, H : BaseViewHolder<T>>(
     val clazz: KClass<T>,
+    //TODO: you do not need layout ID here, use binding
     private val layoutID: Int
 ) {
     fun getOrCreateViewHolder(inflater: LayoutInflater, parent: ViewGroup): H {
