@@ -9,9 +9,11 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.top1shvetsvadim1.coreui.Colors
+import com.top1shvetsvadim1.coreutils.Action
+import com.top1shvetsvadim1.coreutils.BaseAdapter
 import com.top1shvetsvadim1.coreutils.BaseFragment
+import com.top1shvetsvadim1.presentation.delegate.ProductDelegate
 import com.top1shvetsvadim1.presentation.databinding.FragmentMainBinding
-import com.top1shvetsvadim1.presentation.main.adapter.ProductAdapter
 import com.top1shvetsvadim1.presentation.mvi.MainEvent
 import com.top1shvetsvadim1.presentation.mvi.MainIntent
 import com.top1shvetsvadim1.presentation.mvi.MainState
@@ -26,16 +28,18 @@ class MainFragment : BaseFragment<MainState, MainEvent, MainViewModel, FragmentM
 
     override val viewModel: MainViewModel by viewModels()
 
-    private val productAdapter by lazy {
-        ProductAdapter(::onProductClicked)
-    }
 
-    private fun onProductClicked(action: ProductAdapter.ActionProductAdapter) {
+    private val productAdapter by BaseAdapter.Builder()
+        .setDelegates(ProductDelegate())
+        .setActionProcessor(::onProductClicked)
+        .buildIn()
+
+    private fun onProductClicked(action: Action) {
         when (action) {
-            is ProductAdapter.ActionProductAdapter.OnProductClicked -> findNavController().navigate(
+            is ProductDelegate.ActionProductAdapter.OnProductClicked -> findNavController().navigate(
                 MainFragmentDirections.actionMainFragmentToDetailFragment(action.productItem.id)
             )
-            is ProductAdapter.ActionProductAdapter.OnProductFavoriteClicked ->
+            is ProductDelegate.ActionProductAdapter.OnProductFavoriteClicked ->
                 if (action.setFavorite) {
                     viewModel.handleAction(MainIntent.AddItemToFavorite(action.id))
                 } else {
@@ -61,12 +65,19 @@ class MainFragment : BaseFragment<MainState, MainEvent, MainViewModel, FragmentM
     override fun handleEffect(effect: MainEvent) {
         when (effect) {
             MainEvent.GeneralException -> {
+                binding.button.isVisible = false
                 binding.tvError.isVisible = true
                 binding.progressBar.isVisible = false
             }
             MainEvent.ShowNoInternet -> {
+                binding.button.isVisible = false
                 Snackbar.make(binding.root, "No internet connection", Snackbar.LENGTH_LONG)
-                    .setBackgroundTint(ContextCompat.getColor(requireActivity(), Colors.color_main_07195C))
+                    .setBackgroundTint(
+                        ContextCompat.getColor(
+                            requireActivity(),
+                            Colors.color_main_07195C
+                        )
+                    )
                     .setTextColor(ContextCompat.getColor(requireActivity(), Colors.white))
                     .show()
                 lifecycleScope.launch(Dispatchers.Main) {

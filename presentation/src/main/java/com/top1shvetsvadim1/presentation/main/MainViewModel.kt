@@ -31,7 +31,6 @@ class MainViewModel @Inject constructor(
             MainIntent.LoadItems -> loadItems()
             is MainIntent.AddItemToFavorite -> addItemToFavorite(action.id)
             is MainIntent.RemoveItemFromFavorite -> removeItemFromFavorite(action.id)
-            else -> throw RuntimeException("Unknown action")
         }
     }
 

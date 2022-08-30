@@ -6,14 +6,18 @@ import android.view.LayoutInflater
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import coil.load
 import com.google.android.material.snackbar.Snackbar
 import com.top1shvetsvadim1.coreui.Colors
+import com.top1shvetsvadim1.coreutils.BaseAdapter
 import com.top1shvetsvadim1.coreutils.BaseFragment
 import com.top1shvetsvadim1.presentation.R
 import com.top1shvetsvadim1.presentation.databinding.FragmentDetailBinding
+import com.top1shvetsvadim1.presentation.delegate.DescriptionDelegate
+import com.top1shvetsvadim1.presentation.delegate.DetailProductDelegate
+import com.top1shvetsvadim1.presentation.delegate.ImageDelegate
 import com.top1shvetsvadim1.presentation.mvi.DetailEvent
 import com.top1shvetsvadim1.presentation.mvi.DetailIntent
 import com.top1shvetsvadim1.presentation.mvi.DetailState
@@ -27,9 +31,14 @@ class DetailFragment :
 
     private val args by navArgs<DetailFragmentArgs>()
 
+    private val detailAdapter by BaseAdapter.Builder()
+        .setDelegates(ImageDelegate(), DetailProductDelegate(), DescriptionDelegate())
+        .buildIn()
+
     override fun setupViews() {
         binding.progressBar.isVisible = true
         setupOnClickListeners()
+        binding.rvDetail.adapter = detailAdapter
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,15 +53,15 @@ class DetailFragment :
             DetailEvent.GeneralException -> {
                 with(binding){
                     linear2.isVisible = false
-                    tvLabelInformation.isVisible = false
-                    tvSize.text = getString(R.string.hint_general_error)
+                    error.isVisible = true
+                    error.text = getString(R.string.hint_general_error)
                 }
             }
             DetailEvent.ShowNoInternet -> {
                 with(binding){
                     linear2.isVisible = false
-                    tvLabelInformation.isVisible = false
-                    tvSize.text = getString(R.string.hint_check_internet)
+                    error.isVisible = true
+                    error.text = getString(R.string.hint_check_internet)
                 }
                 Snackbar.make(binding.root, "No internet connection", Snackbar.LENGTH_LONG)
                     .setBackgroundTint(ContextCompat.getColor(requireActivity(), Colors.color_main_07195C))
@@ -64,20 +73,15 @@ class DetailFragment :
 
     override fun render(state: DetailState) {
         binding.progressBar.isVisible = state.isLoading
-        state.item?.let { product ->
-            with(binding) {
-                setupOnClickListeners()
-                toolbar.setClickOnRightImage {
-                    viewModel.handleAction(DetailIntent.ChangeStateItem(product.id))
-                    toolbar.setActivatedRightImage(!toolbar.isRightImageActivated())
-                }
-                toolbar.setActivatedRightImage(product.isFavorite)
-                tvProductName.text = product.name
-                tvSize.text = product.size
-                tvPrice.text = "${product.price}"
-                tvSmallPrice.text = "${product.price}"
-                tvDescription.text = product.details
-                ivLogo.load(product.mainImage)
+        Log.d("Test", "${state.isFavorite}")
+        binding.toolbar.setActivatedRightImage(state.isFavorite)
+        lifecycleScope.launchWhenResumed {
+            detailAdapter.submitList(state.item)
+        }
+        with(binding) {
+            setupOnClickListeners()
+            toolbar.setClickOnRightImage {
+                viewModel.handleAction(DetailIntent.ChangeStateItem(args.id))
             }
         }
     }

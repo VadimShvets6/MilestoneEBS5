@@ -9,4 +9,5 @@ interface ProductRepository {
     suspend fun getFavoriteList(): Flow<List<ProductEntity>>
     suspend fun getItemById(id: Int): Flow<ProductEntity>
     suspend fun changeStateItem(id: Int)
+    suspend fun checkIfElementIsFavorite(id: Int) : Flow<Boolean>
 }

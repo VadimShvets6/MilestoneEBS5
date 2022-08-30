@@ -9,4 +9,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="color_main_07195C">#07195C</color>
     <color name="snack_bar_no_internet">#E31818</color>
+    <color name="button_bg">#7740A2</color>
 </resources>

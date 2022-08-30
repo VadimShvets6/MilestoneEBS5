@@ -1,15 +1,18 @@
 package com.top1shvetsvadim1.presentation.favorite
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.top1shvetsvadim1.coreui.Drawable
+import com.top1shvetsvadim1.coreutils.Action
+import com.top1shvetsvadim1.coreutils.BaseAdapter
 import com.top1shvetsvadim1.coreutils.BaseFragment
 import com.top1shvetsvadim1.presentation.databinding.FragmentFavoriteBinding
-import com.top1shvetsvadim1.presentation.favorite.adapter.FavoriteAdapter
+import com.top1shvetsvadim1.presentation.delegate.ProductDelegate
 import com.top1shvetsvadim1.presentation.mvi.FavoriteEvent
 import com.top1shvetsvadim1.presentation.mvi.FavoriteIntent
 import com.top1shvetsvadim1.presentation.mvi.FavoriteState
@@ -22,17 +25,18 @@ class FavoriteFragment :
 
     override val viewModel: FavoriteViewModel by viewModels()
 
-    private val favoriteAdapter by lazy {
-        FavoriteAdapter(::onItemClick)
-    }
+    private val favoriteAdapter by BaseAdapter.Builder()
+        .setDelegates(ProductDelegate())
+        .setActionProcessor(::onItemClick)
+        .buildIn()
 
 
-    private fun onItemClick(action: FavoriteAdapter.ActionFavoriteAdapter) {
+    private fun onItemClick(action: Action) {
         when (action) {
-            is FavoriteAdapter.ActionFavoriteAdapter.OnProductClicked -> findNavController().navigate(
+            is ProductDelegate.ActionProductAdapter.OnProductClicked -> findNavController().navigate(
                 FavoriteFragmentDirections.actionFavoriteFragmentToDetailFragment(action.productItem.id)
             )
-            is FavoriteAdapter.ActionFavoriteAdapter.OnProductFavoriteClicked -> viewModel.handleAction(
+            is ProductDelegate.ActionProductAdapter.OnProductFavoriteClicked -> viewModel.handleAction(
                 FavoriteIntent.RemoveItemFromFavorite(action.id)
             )
         }

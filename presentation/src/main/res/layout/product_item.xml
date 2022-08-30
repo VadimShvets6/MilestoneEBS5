@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/black"
+    android:id="@+id/cardView"
     android:backgroundTint="@color/white"
     android:layout_height="wrap_content">
 
@@ -30,7 +31,7 @@
                 android:layout_marginStart="@dimen/_12sdp"
                 android:contentDescription="@string/app_name"
                 android:layout_width="@dimen/_93sdp"
-                android:layout_height="@dimen/_68sdp"/>
+                android:layout_height="@dimen/_80sdp"/>
 
             <LinearLayout
                 android:orientation="vertical"
@@ -72,7 +73,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/open_sans_semibold"
-                        android:textSize="@dimen/_12ssp"
+                        android:textSize="@dimen/_14ssp"
                         android:textColor="#035A97"
                         tools:text="$ 980,-"/>
 
@@ -81,7 +82,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:fontFamily="@font/open_sans_semibold"
-                        android:textSize="@dimen/_9ssp"
+                        android:textSize="@dimen/_11ssp"
                         android:layout_gravity="top"
                         android:gravity="top"
                         android:textColor="#9CB1BC"

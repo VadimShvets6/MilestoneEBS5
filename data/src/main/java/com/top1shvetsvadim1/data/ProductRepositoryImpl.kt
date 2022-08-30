@@ -27,7 +27,7 @@ class ProductRepositoryImpl @Inject constructor(
                     colour = it.colour,
                     price = it.price,
                     mainImage = it.mainImage,
-                    isFavorite = favorites.map { it.id }.contains(it.id)
+                    isFavorite = favorites.map { item -> item.id }.contains(it.id)
                 )
             }
         }
@@ -82,6 +82,10 @@ class ProductRepositoryImpl @Inject constructor(
                 addProductItemToFavorite(id)
             }
         }
+    }
+
+    override suspend fun checkIfElementIsFavorite(id: Int) : Flow<Boolean> {
+       return favoriteItemDao.getFavoriteList().map { it.map { it.id }.contains(id) }
     }
 
     override suspend fun getFavoriteList(): Flow<List<ProductEntity>> {

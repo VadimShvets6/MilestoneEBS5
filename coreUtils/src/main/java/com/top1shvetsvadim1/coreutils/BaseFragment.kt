@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-abstract class BaseFragment<S : ViewState, E: ViewEvent, VM : BaseViewModel<*, S, E>, VB : ViewBinding> :
+abstract class BaseFragment<S : ViewState, E : ViewEvent, VM : BaseViewModel<*, S, E>, VB : ViewBinding> :
     Fragment() {
     private var _binding: VB? = null
     val binding: VB

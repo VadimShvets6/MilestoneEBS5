@@ -1,13 +1,11 @@
 package com.top1shvetsvadim1.presentation.mvi
 
-import com.top1shvetsvadim1.coreutils.ViewEvent
-import com.top1shvetsvadim1.coreutils.ViewIntent
-import com.top1shvetsvadim1.coreutils.ViewState
-import com.top1shvetsvadim1.domain.ProductEntity
+import com.top1shvetsvadim1.coreutils.*
 
 data class DetailState(
-    val isLoading: Boolean,
-    val item: ProductEntity?
+    val isLoading: Boolean = true,
+    val item: List<BaseUIModel> = emptyList(),
+    val isFavorite: Boolean = false
 ) : ViewState
 
 sealed interface DetailEvent : ViewEvent {

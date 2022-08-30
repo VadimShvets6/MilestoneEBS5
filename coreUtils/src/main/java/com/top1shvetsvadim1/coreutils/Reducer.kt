@@ -11,13 +11,13 @@ abstract class Reducer<S : ViewState, E : ViewEvent>(initialState: S) {
     private val _state = MutableStateFlow(initialState)
     val state = _state.asStateFlow()
 
-    val currentState = state.value
+    val currentState get() = state.value
 
     private val effectChannel = Channel<E>(Channel.RENDEZVOUS)
     val effects = effectChannel.receiveAsFlow()
 
     suspend fun manageResult(result: EventResult) {
-        Log.d("Result", "$result")
+        Log.d("Result", "$result , $currentState")
         when (result) {
             is EventResult.Error -> onError(result.error)
             is EventResult.Loading -> onLoading()
