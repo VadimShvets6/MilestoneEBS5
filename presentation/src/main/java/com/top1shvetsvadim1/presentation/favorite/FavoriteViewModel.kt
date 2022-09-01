@@ -59,6 +59,7 @@ class FavoriteViewModel @Inject constructor(
                         isLoading = false
                     )
                 )
+                //TODO: else
                 else -> sendState(
                     currentState.copy(isLoading = false)
                 )

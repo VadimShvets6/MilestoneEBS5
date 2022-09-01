@@ -4,6 +4,7 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <!-- TODO: add preview image -->
     <ImageView
         android:id="@+id/ivLogo"
         android:layout_width="match_parent"

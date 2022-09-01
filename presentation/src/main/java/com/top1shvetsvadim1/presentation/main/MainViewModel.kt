@@ -34,6 +34,7 @@ class MainViewModel @Inject constructor(
         }
     }
 
+    //TODO: you can move this functions directly in handleActions, because they are one-row-sized.
     private fun removeItemFromFavorite(id : Int) {
         removeProductFromFavoriteUseCase.run(summoner = this, params = id)
     }

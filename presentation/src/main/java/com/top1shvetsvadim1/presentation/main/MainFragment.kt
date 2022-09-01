@@ -28,7 +28,6 @@ class MainFragment : BaseFragment<MainState, MainEvent, MainViewModel, FragmentM
 
     override val viewModel: MainViewModel by viewModels()
 
-
     private val productAdapter by BaseAdapter.Builder()
         .setDelegates(ProductDelegate())
         .setActionProcessor(::onProductClicked)
@@ -62,6 +61,7 @@ class MainFragment : BaseFragment<MainState, MainEvent, MainViewModel, FragmentM
         binding.rvProductList.adapter = productAdapter
     }
 
+    //TODO: move it to your base fragment. Note: you can dynamically create views in any ViewGroup and change their layout params.
     override fun handleEffect(effect: MainEvent) {
         when (effect) {
             MainEvent.GeneralException -> {
@@ -81,6 +81,7 @@ class MainFragment : BaseFragment<MainState, MainEvent, MainViewModel, FragmentM
                     .setTextColor(ContextCompat.getColor(requireActivity(), Colors.white))
                     .show()
                 lifecycleScope.launch(Dispatchers.Main) {
+                    //TODO: strange delay. You should show try again option immediately, if you app is not cache-first.
                     delay(10000)
                     binding.progressBar.isVisible = false
                     binding.buttonTryAgain.apply {

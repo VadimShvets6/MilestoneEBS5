@@ -24,13 +24,13 @@ import com.top1shvetsvadim1.presentation.mvi.DetailState
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class DetailFragment :
-    BaseFragment<DetailState, DetailEvent, DetailViewModel, FragmentDetailBinding>() {
+class DetailFragment : BaseFragment<DetailState, DetailEvent, DetailViewModel, FragmentDetailBinding>() {
 
     override val viewModel: DetailViewModel by viewModels()
 
     private val args by navArgs<DetailFragmentArgs>()
 
+    //TODO: consider reading about laziness to understand better its concepts.
     private val detailAdapter by BaseAdapter.Builder()
         .setDelegates(ImageDelegate(), DetailProductDelegate(), DescriptionDelegate())
         .buildIn()
@@ -47,6 +47,7 @@ class DetailFragment :
     }
 
 
+    //TODO: Move error handling in base fragment
     override fun handleEffect(effect: DetailEvent) {
         Log.d("OnError", "handelEffect: $effect")
         when (effect) {
@@ -75,6 +76,7 @@ class DetailFragment :
         binding.progressBar.isVisible = state.isLoading
         Log.d("Test", "${state.isFavorite}")
         binding.toolbar.setActivatedRightImage(state.isFavorite)
+        //TODO: use launch IO instead of launchWhenResumed
         lifecycleScope.launchWhenResumed {
             detailAdapter.submitList(state.item)
         }

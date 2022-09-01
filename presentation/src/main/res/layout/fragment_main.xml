@@ -111,6 +111,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
+    <!-- TODO: try to implement TRY-AGAIN with snackbar -->
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/buttonTryAgain"
         android:layout_width="wrap_content"
@@ -147,7 +149,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
-
+    <!-- TODO: warning -->
     <com.top1shvetsvadim1.presentation.customView.CustomButton
         android:id="@+id/button"
         android:layout_width="match_parent"

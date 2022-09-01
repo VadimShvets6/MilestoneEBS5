@@ -17,6 +17,7 @@
         android:background="@color/white"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <!-- TODO typo -->
     <ImageView
         android:id="@+id/cartButtonInBottomBar"
         android:layout_width="@dimen/_14sdp"
@@ -32,6 +33,7 @@
         app:srcCompat="@drawable/ic_buschet"
         app:tint="#FFFFFF" />
 
+    <!-- TODO: I think you do not need backgroundTint attribute -->
     <FrameLayout
         android:id="@+id/cartItemsNumberButton"
         android:layout_width="@dimen/_18sdp"
@@ -68,8 +70,6 @@
         app:layout_constraintEnd_toStartOf="@+id/cartItemsNumberButton"
         app:layout_constraintStart_toEndOf="@id/cartButtonInBottomBar"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="145dp"
-        tools:layout_editor_absoluteY="8dp"
         tools:text="MY CART" />
 
     <View

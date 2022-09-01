@@ -11,6 +11,7 @@ data class FavoriteState(
     val items: Flow<List<ProductUIModel>>
 ): ViewState
 
+//TODO: If there are no events, consider using some generic object like NoEvents: ViewEvent
 sealed interface FavoriteEvent: ViewEvent {
 
 }

@@ -24,6 +24,8 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
+
+    <!-- TODO: I think that it is an unnecessary parent and you can use root constraint layout -->
     <LinearLayout
         android:id="@+id/linear1"
         android:layout_width="match_parent"

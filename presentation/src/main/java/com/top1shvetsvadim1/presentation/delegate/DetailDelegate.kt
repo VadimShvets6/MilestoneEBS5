@@ -113,6 +113,7 @@ class DetailProductDelegate :
     }
 }
 
+//TODO: Create ItemText (it is a big task). There will be text, margin, fontSize, color, style and etc. You can use Novalles, if you think you understand payloding.
 class DescriptionDelegate :
     ItemDelegate<DescriptionUIModel, DescriptionDelegate.DescriptionViewHolder>(
         DescriptionUIModel::class,

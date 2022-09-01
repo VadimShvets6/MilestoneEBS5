@@ -33,6 +33,9 @@ class FavoriteFragment :
 
     private fun onItemClick(action: Action) {
         when (action) {
+            //TODO: change your navigation functional.
+            //TODO: 1. Move it to your base fragment and create some base functions.
+            //TODO: 2. Remove anims from XML of navGraph and create it in BaseFragment via NavOptions.
             is ProductDelegate.ActionProductAdapter.OnProductClicked -> findNavController().navigate(
                 FavoriteFragmentDirections.actionFavoriteFragmentToDetailFragment(action.productItem.id)
             )
@@ -45,6 +48,7 @@ class FavoriteFragment :
 
     override fun setupViews() {
         binding.rvListFavorite.adapter = favoriteAdapter
+        //TODO: duplicate of row 62. This is a part of state, not of views setup.
         binding.progressBar.isVisible = true
         binding.toolbar.setRightImage(Drawable.ic_heart_favorites)
     }

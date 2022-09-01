@@ -78,6 +78,7 @@ class DetailViewModel @Inject constructor(
             )
         }
 
+        //TODO: try to create generic error events.
         override suspend fun onError(error: Exception) {
             Log.d("OnError", "$error")
             when (error) {
@@ -105,11 +106,13 @@ class DetailViewModel @Inject constructor(
                         isLoading = false,
                     )
                 )
+                //TODO: consider to use inline classes for primitives in responses.
                 is Boolean -> sendState(
                     currentState.copy(
                         isFavorite = payload
                     )
                 )
+                //TODO: do not use else in reducers
                 else -> {
                     sendState(
                         currentState.copy(
