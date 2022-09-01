@@ -3,9 +3,9 @@ package com.top1shvetsvadim1.presentation.favorite
 import com.top1shvetsvadim1.coreutils.BaseViewModel
 import com.top1shvetsvadim1.coreutils.Reducer
 import com.top1shvetsvadim1.coreutils.run
-import com.top1shvetsvadim1.domain.GetFavoriteProductListUseCase
-import com.top1shvetsvadim1.domain.ProductResponse
-import com.top1shvetsvadim1.domain.RemoveProductFromFavoriteUseCase
+import com.top1shvetsvadim1.domain.models.ProductResponse
+import com.top1shvetsvadim1.domain.useCase.GetFavoriteProductListUseCase
+import com.top1shvetsvadim1.domain.useCase.RemoveProductFromFavoriteUseCase
 import com.top1shvetsvadim1.presentation.mvi.FavoriteEvent
 import com.top1shvetsvadim1.presentation.mvi.FavoriteIntent
 import com.top1shvetsvadim1.presentation.mvi.FavoriteState

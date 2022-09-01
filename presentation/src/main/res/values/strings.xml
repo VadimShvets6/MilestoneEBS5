@@ -9,4 +9,5 @@
     <string name="hint_general_error">An error occurred, please try again later</string>
     <string name="button_try_again">Try again</string>
     <string name="dollar">$%s,-</string>
+    <string name="cart_text_view">cart</string>
 </resources>

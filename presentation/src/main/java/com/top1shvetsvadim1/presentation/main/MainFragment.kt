@@ -1,6 +1,7 @@
 package com.top1shvetsvadim1.presentation.main
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
@@ -8,12 +9,12 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
+import com.top1shvetsvadim1.coreui.Action
+import com.top1shvetsvadim1.coreui.BaseAdapter
 import com.top1shvetsvadim1.coreui.Colors
-import com.top1shvetsvadim1.coreutils.Action
-import com.top1shvetsvadim1.coreutils.BaseAdapter
 import com.top1shvetsvadim1.coreutils.BaseFragment
-import com.top1shvetsvadim1.presentation.delegate.ProductDelegate
 import com.top1shvetsvadim1.presentation.databinding.FragmentMainBinding
+import com.top1shvetsvadim1.presentation.delegate.ProductDelegate
 import com.top1shvetsvadim1.presentation.mvi.MainEvent
 import com.top1shvetsvadim1.presentation.mvi.MainIntent
 import com.top1shvetsvadim1.presentation.mvi.MainState
@@ -38,10 +39,23 @@ class MainFragment : BaseFragment<MainState, MainEvent, MainViewModel, FragmentM
             is ProductDelegate.ActionProductAdapter.OnProductClicked -> findNavController().navigate(
                 MainFragmentDirections.actionMainFragmentToDetailFragment(action.productItem.id)
             )
+
+            is ProductDelegate.ActionProductAdapter.OnProductCartClicked -> {
+                Log.d("BASEDATA", "${action.setCart}")
+                if (action.setCart) {
+                    Log.d("BASEDATA", "add")
+                    viewModel.handleAction(MainIntent.AddItemToCart(action.id))
+                } else {
+                    Log.d("BASEDATA", "remove")
+                    viewModel.handleAction(MainIntent.RemoveItemFromCart(action.id))
+                }
+            }
             is ProductDelegate.ActionProductAdapter.OnProductFavoriteClicked ->
                 if (action.setFavorite) {
+                    Log.d("BASEDATA", "add")
                     viewModel.handleAction(MainIntent.AddItemToFavorite(action.id))
                 } else {
+                    Log.d("BASEDATA", "remove")
                     viewModel.handleAction(MainIntent.RemoveItemFromFavorite(action.id))
                 }
         }
@@ -65,12 +79,12 @@ class MainFragment : BaseFragment<MainState, MainEvent, MainViewModel, FragmentM
     override fun handleEffect(effect: MainEvent) {
         when (effect) {
             MainEvent.GeneralException -> {
-                binding.button.isVisible = false
+                binding.buttonCart.isVisible = false
                 binding.tvError.isVisible = true
                 binding.progressBar.isVisible = false
             }
             MainEvent.ShowNoInternet -> {
-                binding.button.isVisible = false
+                binding.buttonCart.isVisible = false
                 Snackbar.make(binding.root, "No internet connection", Snackbar.LENGTH_LONG)
                     .setBackgroundTint(
                         ContextCompat.getColor(
@@ -98,6 +112,7 @@ class MainFragment : BaseFragment<MainState, MainEvent, MainViewModel, FragmentM
     }
 
     override fun render(state: MainState) {
+        Log.d("BASEDATA", "render")
         binding.progressBar.isVisible = state.isLoading
         lifecycleScope.launchWhenResumed {
             state.items.collectLatest {
@@ -106,6 +121,9 @@ class MainFragment : BaseFragment<MainState, MainEvent, MainViewModel, FragmentM
         }
         binding.toolbar.setClickOnRightImage {
             findNavController().navigate(MainFragmentDirections.actionMainFragmentToFavoriteFragment())
+        }
+        binding.buttonCart.setOnClickListener {
+            findNavController().navigate(MainFragmentDirections.actionMainFragmentToCartFragment())
         }
     }
 }

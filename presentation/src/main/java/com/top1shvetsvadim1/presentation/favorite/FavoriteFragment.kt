@@ -1,15 +1,14 @@
 package com.top1shvetsvadim1.presentation.favorite
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.top1shvetsvadim1.coreui.Action
+import com.top1shvetsvadim1.coreui.BaseAdapter
 import com.top1shvetsvadim1.coreui.Drawable
-import com.top1shvetsvadim1.coreutils.Action
-import com.top1shvetsvadim1.coreutils.BaseAdapter
 import com.top1shvetsvadim1.coreutils.BaseFragment
 import com.top1shvetsvadim1.presentation.databinding.FragmentFavoriteBinding
 import com.top1shvetsvadim1.presentation.delegate.ProductDelegate

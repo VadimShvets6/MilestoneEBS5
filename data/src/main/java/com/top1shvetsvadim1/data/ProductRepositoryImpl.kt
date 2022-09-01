@@ -1,10 +1,11 @@
 package com.top1shvetsvadim1.data
 
-import android.util.Log
 import com.top1shvetsvadim1.data.database.FavoriteItemDao
 import com.top1shvetsvadim1.data.network.ApiService
-import com.top1shvetsvadim1.domain.ProductEntity
-import com.top1shvetsvadim1.domain.ProductRepository
+import com.top1shvetsvadim1.domain.models.ProductEntity
+import com.top1shvetsvadim1.domain.models.ProductFavorite
+import com.top1shvetsvadim1.domain.models.ProductsInCarts
+import com.top1shvetsvadim1.domain.repository.ProductRepository
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
@@ -16,8 +17,9 @@ class ProductRepositoryImpl @Inject constructor(
     override suspend fun getProductList(): Flow<List<ProductEntity>> {
         return combine(
             flowOf(apiService.getProductList(page = 1).results),
-            getFavoriteList()
-        ) { products, favorites ->
+            getFavoriteList(),
+            getCartList()
+        ) { products, favorites, carts ->
             products.map {
                 ProductEntity(
                     id = it.id,
@@ -27,7 +29,8 @@ class ProductRepositoryImpl @Inject constructor(
                     colour = it.colour,
                     price = it.price,
                     mainImage = it.mainImage,
-                    isFavorite = favorites.map { item -> item.id }.contains(it.id)
+                    isFavorite = favorites.map { item -> item.id }.contains(it.id),
+                    inCart = carts.map { item -> item.id }.contains(it.id)
                 )
             }
         }
@@ -40,7 +43,7 @@ class ProductRepositoryImpl @Inject constructor(
     override suspend fun addProductItemToFavorite(id: Int) {
         val productItem = apiService.getProductById(id)
         favoriteItemDao.addFavoriteItem(
-            ProductEntity(
+            ProductFavorite(
                 id = productItem.id,
                 name = productItem.name,
                 details = productItem.details,
@@ -51,6 +54,26 @@ class ProductRepositoryImpl @Inject constructor(
                 isFavorite = !productItem.isFavorite
             )
         )
+    }
+
+    override suspend fun addProductItemToCart(id: Int) {
+        val productItem = apiService.getProductById(id)
+        favoriteItemDao.addItemToCart(
+            ProductsInCarts(
+                id = productItem.id,
+                name = productItem.name,
+                details = productItem.details,
+                size = productItem.size,
+                colour = productItem.colour,
+                price = productItem.price,
+                mainImage = productItem.mainImage,
+                inCart = !productItem.inCart
+            )
+        )
+    }
+
+    override suspend fun removeProductItemFromCart(id: Int) {
+        favoriteItemDao.deleteProductItemFromCart(id)
     }
 
     override suspend fun getItemById(id: Int): Flow<ProductEntity> {
@@ -66,31 +89,32 @@ class ProductRepositoryImpl @Inject constructor(
                 colour = product.colour,
                 price = product.price,
                 mainImage = product.mainImage,
-                isFavorite = favorites.map { it.id }.contains(product.id)
+                isFavorite = favorites.map { it.id }.contains(product.id),
+                inCart = false
             )
         }
     }
 
-    //TODO: remove unused logs
     override suspend fun changeStateItem(id: Int) {
         when (favoriteItemDao.getFavoriteList().first().map { it.id }.contains(id)) {
             true -> {
-                Log.d("DetailFrag", "remove")
                 removeProductItemFromFavorite(id)
             }
             false -> {
-                Log.d("DetailFrag", "add")
                 addProductItemToFavorite(id)
             }
         }
     }
 
-    //TODO: Ctrl + alt + L. Next time will finish code review after the first formatting issue.
-    override suspend fun checkIfElementIsFavorite(id: Int) : Flow<Boolean> {
-       return favoriteItemDao.getFavoriteList().map { it.map { it.id }.contains(id) }
+    override suspend fun checkIfElementIsFavorite(id: Int): Flow<Boolean> {
+        return favoriteItemDao.getFavoriteList().map { it.map { it.id }.contains(id) }
     }
 
-    override suspend fun getFavoriteList(): Flow<List<ProductEntity>> {
+    override suspend fun getFavoriteList(): Flow<List<ProductFavorite>> {
         return favoriteItemDao.getFavoriteList()
+    }
+
+    override suspend fun getCartList(): Flow<List<ProductsInCarts>> {
+        return favoriteItemDao.getCartList()
     }
 }

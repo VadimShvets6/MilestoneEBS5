@@ -1,6 +1,9 @@
-package com.top1shvetsvadim1.domain
+package com.top1shvetsvadim1.domain.useCase
 
 import com.top1shvetsvadim1.coreutils.UseCaseNoParams
+import com.top1shvetsvadim1.domain.models.ProductResponse
+import com.top1shvetsvadim1.domain.repository.ProductRepository
+import com.top1shvetsvadim1.domain.uimodels.ProductUIModel
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
@@ -12,11 +15,12 @@ class GetProductListUseCase @Inject constructor(
         it.map { entity ->
             ProductUIModel(
                 name = entity.name,
-                size = entity.size,
+                sizes = entity.size,
                 price = entity.price,
                 mainImage = entity.mainImage,
                 id = entity.id,
-                isFavorite = entity.isFavorite
+                isFavorite = entity.isFavorite,
+                inCart = entity.inCart
             )
         }
     }.let {

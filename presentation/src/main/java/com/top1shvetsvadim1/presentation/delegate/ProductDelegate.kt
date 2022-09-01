@@ -1,26 +1,24 @@
 package com.top1shvetsvadim1.presentation.delegate
 
-import android.view.View
+import android.view.LayoutInflater
+import android.view.ViewGroup
 import coil.load
-import com.top1shvetsvadim1.coreui.Drawable
-import com.top1shvetsvadim1.coreutils.Action
+import com.top1shvetsvadim1.coreui.Action
+import com.top1shvetsvadim1.coreui.ItemDelegate
 import com.top1shvetsvadim1.coreutils.BaseViewHolder
-import com.top1shvetsvadim1.coreutils.ItemDelegate
-import com.top1shvetsvadim1.domain.ProductPayload
-import com.top1shvetsvadim1.domain.ProductUIModel
-import com.top1shvetsvadim1.presentation.R
+import com.top1shvetsvadim1.domain.uimodels.ProductPayload
+import com.top1shvetsvadim1.domain.uimodels.ProductUIModel
 import com.top1shvetsvadim1.presentation.databinding.ProductItemBinding
 
-class ProductDelegate : ItemDelegate<ProductUIModel, ProductDelegate.FavoriteViewHolder>(
-    ProductUIModel::class,
-    R.layout.product_item
+class ProductDelegate : ItemDelegate<ProductUIModel, ProductDelegate.ProductViewHolder>(
+    ProductUIModel::class
 ) {
-    override fun createViewHolder(view: View): FavoriteViewHolder {
-        return FavoriteViewHolder(ProductItemBinding.bind(view))
+    override fun createViewHolder(inflater: LayoutInflater, parent: ViewGroup): ProductViewHolder {
+        return ProductViewHolder(ProductItemBinding.inflate(inflater, parent, false))
     }
 
     override fun onBindViewHolder(
-        holder: FavoriteViewHolder,
+        holder: ProductViewHolder,
         item: ProductUIModel,
         payload: MutableList<Any>
     ) {
@@ -35,26 +33,32 @@ class ProductDelegate : ItemDelegate<ProductUIModel, ProductDelegate.FavoriteVie
                     is ProductPayload.NameChanged -> holder.setName(it.newName)
                     is ProductPayload.PictureChange -> holder.setPicture(it.newPicture)
                     is ProductPayload.PriceChange -> holder.setPrice(it.newPrice)
+                    is ProductPayload.SizeChange -> holder.setSize(it.newSize)
+                    is ProductPayload.CartChange -> holder.setCart(it.newStatus)
                 }
             }
         }
-        //TODO: you should call setOnClickListeners at the end of onBindViewHolder (primitive copies)
+        holder.setOnClickListeners(item)
     }
 
-    inner class FavoriteViewHolder(private val binding: ProductItemBinding) :
+    inner class ProductViewHolder(private val binding: ProductItemBinding) :
         BaseViewHolder<ProductUIModel>(binding) {
         override fun bind(item: ProductUIModel) {
             setName(item.name)
             setPrice(item.price)
             setPicture(item.mainImage)
             setFavorite(item.isFavorite)
-            setSize(item.size)
+            setCart(item.inCart)
+            setSize(item.sizes)
             setOnClickListeners(item)
         }
 
         override fun setOnClickListeners(item: ProductUIModel) {
             binding.buttonHeart.setOnClickListener {
                 pushAction(ActionProductAdapter.OnProductFavoriteClicked(item.id, !item.isFavorite))
+            }
+            binding.buttonBuschet.setOnClickListener {
+                pushAction(ActionProductAdapter.OnProductCartClicked(item.id, !item.inCart))
             }
             binding.root.setOnClickListener {
                 pushAction(ActionProductAdapter.OnProductClicked(item))
@@ -75,24 +79,21 @@ class ProductDelegate : ItemDelegate<ProductUIModel, ProductDelegate.FavoriteVie
         }
 
         fun setFavorite(favorite: Boolean) {
-            //TODO: replace with selector
-            if (favorite) {
-                binding.buttonHeart.load(Drawable.ic_favorite_main)
-            } else {
-                binding.buttonHeart.load(Drawable.ic_icon_heart)
-            }
+            binding.buttonHeart.isActivated = favorite
         }
 
-        private fun setSize(size: String) {
+        fun setCart(cart: Boolean){
+            binding.buttonBuschet.isActivated = cart
+        }
+
+        fun setSize(size: String) {
             binding.tvSize.text = size
         }
     }
 
-    //TODO: bad code formatting
     sealed interface ActionProductAdapter : Action {
-        data class OnProductFavoriteClicked(val id: Int, val setFavorite: Boolean) :
-            ActionProductAdapter
-
+        data class OnProductFavoriteClicked(val id: Int, val setFavorite: Boolean) : ActionProductAdapter
         data class OnProductClicked(val productItem: ProductUIModel) : ActionProductAdapter
+        data class OnProductCartClicked(val id: Int, val setCart: Boolean) : ActionProductAdapter
     }
 }

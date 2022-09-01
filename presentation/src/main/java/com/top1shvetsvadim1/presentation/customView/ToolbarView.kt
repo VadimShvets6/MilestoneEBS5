@@ -6,6 +6,7 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.top1shvetsvadim1.coreui.Stylable
+import com.top1shvetsvadim1.coreui.getTypedArray
 import com.top1shvetsvadim1.presentation.databinding.ToolbarBinding
 
 class ToolbarView @JvmOverloads constructor(
@@ -30,7 +31,6 @@ class ToolbarView @JvmOverloads constructor(
             getTypedArray(context, attrs, Stylable.Toolbar)
 
         viewBinding.apply {
-            //TODO: check case: if there are no value for field, does it work correct.
             leftIcon.setImageResource(
                 attr.getResourceId(
                     com.top1shvetsvadim1.coreui.R.styleable.Toolbar_toolbarLeftImage,
@@ -51,11 +51,10 @@ class ToolbarView @JvmOverloads constructor(
             )
 
         }
-        //TODO: typed array is not recycled
+        attr.recycle()
     }
 
-    //TODO: code formatting
-    fun setRightImage(image : Int){
+    fun setRightImage(image: Int) {
         viewBinding.rightIcon.setImageResource(image)
     }
 
@@ -65,26 +64,17 @@ class ToolbarView @JvmOverloads constructor(
         }
     }
 
-    fun setClickOnRightImage(click: () -> Unit){
+    fun setClickOnRightImage(click: () -> Unit) {
         viewBinding.rightIcon.setOnClickListener {
             click()
         }
     }
 
-    fun setActivatedRightImage(click: Boolean){
+    fun setActivatedRightImage(click: Boolean) {
         viewBinding.rightIcon.isActivated = click
     }
 
-    fun isRightImageActivated() : Boolean{
+    fun isRightImageActivated(): Boolean {
         return viewBinding.rightIcon.isActivated
-    }
-
-    //TODO: this function can be moved to core UI
-    private fun getTypedArray(
-        context: Context,
-        attributeSet: AttributeSet,
-        attr: IntArray
-    ): TypedArray {
-        return context.obtainStyledAttributes(attributeSet, attr, 0, 0)
     }
 }

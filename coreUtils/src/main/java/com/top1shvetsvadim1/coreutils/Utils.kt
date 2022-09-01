@@ -25,12 +25,6 @@ interface UseCase<PARAM : Any, RETURN : Any> {
     suspend operator fun invoke(params: PARAM): RETURN
 }
 
-//TODO: unused
-abstract class ItemViewHolder<I : BaseUIModel>(binding: ViewBinding) :
-    RecyclerView.ViewHolder(binding.root) {
-    abstract fun bind(item: I)
-}
-
 fun CoroutineScope.launchIO(action: suspend () -> Unit): Job {
     return launch(Dispatchers.IO) {
         action()

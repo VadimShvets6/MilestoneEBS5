@@ -1,6 +1,9 @@
 package com.top1shvetsvadim1.presentation.mvi
 
-import com.top1shvetsvadim1.coreutils.*
+import com.top1shvetsvadim1.coreutils.BaseUIModel
+import com.top1shvetsvadim1.coreutils.ViewEvent
+import com.top1shvetsvadim1.coreutils.ViewIntent
+import com.top1shvetsvadim1.coreutils.ViewState
 
 //TODO: move MVI components in corresponding packages.
 data class DetailState(

@@ -3,7 +3,7 @@ package com.top1shvetsvadim1.presentation.mvi
 import com.top1shvetsvadim1.coreutils.ViewEvent
 import com.top1shvetsvadim1.coreutils.ViewIntent
 import com.top1shvetsvadim1.coreutils.ViewState
-import com.top1shvetsvadim1.domain.ProductUIModel
+import com.top1shvetsvadim1.domain.uimodels.ProductUIModel
 import kotlinx.coroutines.flow.Flow
 
 data class FavoriteState(

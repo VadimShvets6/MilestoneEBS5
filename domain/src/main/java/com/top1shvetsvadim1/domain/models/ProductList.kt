@@ -1,13 +1,12 @@
-package com.top1shvetsvadim1.domain
+package com.top1shvetsvadim1.domain.models
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-import kotlinx.coroutines.flow.Flow
 
 @JsonClass(generateAdapter = true)
-data class ProductListDTO(
+data class ProductList(
     @Json(name = "current_page")
     val currentPage: Int,
     @Json(name = "results")
-    val results: List<ProductItemDTO>
+    val results: List<ProductItem>
 )

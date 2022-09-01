@@ -1,14 +1,20 @@
-package com.top1shvetsvadim1.coreutils
+package com.top1shvetsvadim1.coreui
 
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.inflate
 import android.view.ViewGroup
+import androidx.appcompat.resources.Compatibility.Api21Impl.inflate
+import androidx.core.content.res.ColorStateListInflaterCompat.inflate
 import androidx.recyclerview.widget.ListAdapter
+import androidx.viewbinding.ViewBinding
+import com.top1shvetsvadim1.coreutils.BaseUIModel
+import com.top1shvetsvadim1.coreutils.BaseViewHolder
+import com.top1shvetsvadim1.coreutils.DefaultDiffUtil
 import kotlin.reflect.KClass
 
-//TODO: move to Core UI
 class BaseAdapter private constructor(private val delegates: List<ItemDelegate<BaseUIModel, BaseViewHolder<BaseUIModel>>>) :
-    ListAdapter<BaseUIModel, BaseViewHolder<BaseUIModel>>(DefaultDiffUtil(delegates)) {
+    ListAdapter<BaseUIModel, BaseViewHolder<BaseUIModel>>(DefaultDiffUtil()) {
 
     override fun getItemViewType(position: Int): Int {
         return delegates.find { it.clazz == getItem(position)::class }
@@ -17,7 +23,6 @@ class BaseAdapter private constructor(private val delegates: List<ItemDelegate<B
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<BaseUIModel> {
-        //TODO: hope you've understood what you done, 'cause I see copied functions from Delegate Adapter
         return delegates[viewType].getOrCreateViewHolder(
             LayoutInflater.from(parent.context),
             parent
@@ -35,7 +40,6 @@ class BaseAdapter private constructor(private val delegates: List<ItemDelegate<B
     ) {
         val item = getItem(position)
         delegates[getItemViewType(position)].onBindViewHolder(holder, item, payloads)
-        holder.setOnClickListeners(item)
     }
 
     @Suppress("UNCHECKED_CAST")
@@ -43,7 +47,6 @@ class BaseAdapter private constructor(private val delegates: List<ItemDelegate<B
         private val delegates: MutableList<ItemDelegate<BaseUIModel, BaseViewHolder<BaseUIModel>>> =
             mutableListOf()
 
-        //TODO: hope you've understood what you done, 'cause I see copied functions from Delegate Adapter
         fun setDelegates(vararg delegate: ItemDelegate<out BaseUIModel, out BaseViewHolder<out BaseUIModel>>): Builder {
             delegate.forEach {
                 delegates.add(it as ItemDelegate<BaseUIModel, BaseViewHolder<BaseUIModel>>)
@@ -58,27 +61,22 @@ class BaseAdapter private constructor(private val delegates: List<ItemDelegate<B
             return this
         }
 
-        //TODO: hope you've understood what you done, 'cause I see copied functions from Delegate Adapter
         fun buildIn() = lazy(LazyThreadSafetyMode.SYNCHRONIZED) { BaseAdapter(delegates) }
     }
 }
 
-//TODO: hope you've understood what you done, 'cause I see copied functions from Delegate Adapter
 abstract class ItemDelegate<T : BaseUIModel, H : BaseViewHolder<T>>(
-    val clazz: KClass<T>,
-    //TODO: you do not need layout ID here, use binding
-    private val layoutID: Int
+    val clazz: KClass<T>
 ) {
     fun getOrCreateViewHolder(inflater: LayoutInflater, parent: ViewGroup): H {
-        val view = inflater.inflate(layoutID, parent, false)
-        return createViewHolder(view)
+        return createViewHolder(inflater, parent)
     }
 
     fun pushAction(action: Action) {
         this.action(action)
     }
 
-    abstract fun createViewHolder(view: View): H
+    abstract fun createViewHolder(inflater: LayoutInflater, parent: ViewGroup): H
 
     open fun onBindViewHolder(holder: H, item: T, payload: MutableList<Any>) {
         holder.bind(item)

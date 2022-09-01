@@ -2,7 +2,14 @@ package com.top1shvetsvadim1.presentation.detail
 
 import android.util.Log
 import com.top1shvetsvadim1.coreutils.*
-import com.top1shvetsvadim1.domain.*
+import com.top1shvetsvadim1.domain.uimodels.DescriptionUIModel
+import com.top1shvetsvadim1.domain.uimodels.DetailProductUIModel
+import com.top1shvetsvadim1.domain.uimodels.ImageUIModel
+import com.top1shvetsvadim1.domain.useCase.ChangeStateItemUseCase
+import com.top1shvetsvadim1.domain.useCase.CheckIfElementIsFavoriteUseCase
+import com.top1shvetsvadim1.domain.useCase.DetailsResponse
+import com.top1shvetsvadim1.domain.useCase.GetItemByIdUseCase
+import com.top1shvetsvadim1.presentation.mvi.CartIntent
 import com.top1shvetsvadim1.presentation.mvi.DetailEvent
 import com.top1shvetsvadim1.presentation.mvi.DetailIntent
 import com.top1shvetsvadim1.presentation.mvi.DetailState

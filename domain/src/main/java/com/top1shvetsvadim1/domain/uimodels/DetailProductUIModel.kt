@@ -1,4 +1,4 @@
-package com.top1shvetsvadim1.domain
+package com.top1shvetsvadim1.domain.uimodels
 
 import com.top1shvetsvadim1.coreutils.BaseUIModel
 import com.top1shvetsvadim1.coreutils.Payloadable

@@ -1,10 +1,10 @@
-package com.top1shvetsvadim1.domain
+package com.top1shvetsvadim1.domain.models
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class ProductItemDTO(
+data class ProductItem(
     @Json(name = "name")
     val name: String,
     @Json(name = "details")
@@ -19,5 +19,6 @@ data class ProductItemDTO(
     val mainImage: String,
     @Json(name = "id")
     val id: Int,
-    val isFavorite : Boolean = false
+    val isFavorite : Boolean = false,
+    val inCart : Boolean = false
 )

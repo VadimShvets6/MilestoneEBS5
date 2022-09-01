@@ -4,10 +4,8 @@ import android.util.Log
 import com.top1shvetsvadim1.coreutils.BaseViewModel
 import com.top1shvetsvadim1.coreutils.Reducer
 import com.top1shvetsvadim1.coreutils.run
-import com.top1shvetsvadim1.domain.AddItemToFavoriteUseCase
-import com.top1shvetsvadim1.domain.GetProductListUseCase
-import com.top1shvetsvadim1.domain.ProductResponse
-import com.top1shvetsvadim1.domain.RemoveProductFromFavoriteUseCase
+import com.top1shvetsvadim1.domain.models.ProductResponse
+import com.top1shvetsvadim1.domain.useCase.*
 import com.top1shvetsvadim1.presentation.mvi.MainEvent
 import com.top1shvetsvadim1.presentation.mvi.MainIntent
 import com.top1shvetsvadim1.presentation.mvi.MainState
@@ -21,7 +19,9 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(
     private val getProductListUseCase: GetProductListUseCase,
     private val addItemToFavoriteUseCase: AddItemToFavoriteUseCase,
-    private val removeProductFromFavoriteUseCase: RemoveProductFromFavoriteUseCase
+    private val removeProductFromFavoriteUseCase: RemoveProductFromFavoriteUseCase,
+    private val addItemToCartUseCase: AddItemToCartUseCase,
+    private val removeProductFromCartUseCase: RemoveProductFromCartUseCase
 ) : BaseViewModel<MainIntent, MainState, MainEvent>() {
 
     override val reducer: Reducer<MainState, MainEvent> = MainReducer()
@@ -31,11 +31,21 @@ class MainViewModel @Inject constructor(
             MainIntent.LoadItems -> loadItems()
             is MainIntent.AddItemToFavorite -> addItemToFavorite(action.id)
             is MainIntent.RemoveItemFromFavorite -> removeItemFromFavorite(action.id)
+            is MainIntent.AddItemToCart -> addItemToCart(action.id)
+            is MainIntent.RemoveItemFromCart -> removeItemFromCart(action.id)
         }
     }
 
+    private fun removeItemFromCart(id: Int) {
+        removeProductFromCartUseCase.run(summoner = this, params = id)
+    }
+
+    private fun addItemToCart(id: Int) {
+        addItemToCartUseCase.run(summoner = this, params = id)
+    }
+
     //TODO: you can move this functions directly in handleActions, because they are one-row-sized.
-    private fun removeItemFromFavorite(id : Int) {
+    private fun removeItemFromFavorite(id: Int) {
         removeProductFromFavoriteUseCase.run(summoner = this, params = id)
     }
 
@@ -63,7 +73,7 @@ class MainViewModel @Inject constructor(
                     MainEvent.ShowNoInternet
                 )
                 is HttpException -> {
-                    when(error.code()){
+                    when (error.code()) {
                         404 -> {
                             Log.d("Error", "Error 404")
                         }

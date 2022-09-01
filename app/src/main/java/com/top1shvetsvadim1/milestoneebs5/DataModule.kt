@@ -1,7 +1,7 @@
 package com.top1shvetsvadim1.milestoneebs5
 
 import com.top1shvetsvadim1.data.ProductRepositoryImpl
-import com.top1shvetsvadim1.domain.ProductRepository
+import com.top1shvetsvadim1.domain.repository.ProductRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

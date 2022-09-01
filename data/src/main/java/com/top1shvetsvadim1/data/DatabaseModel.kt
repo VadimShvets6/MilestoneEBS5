@@ -13,8 +13,7 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object DatabaseModel {
-    //TODO: bad db name, it can be not only for favourites
-    private const val DB_NAME = "favorite_database.db"
+    private const val DB_NAME = "milestone_database.db"
 
     @Singleton
     @Provides
@@ -22,7 +21,7 @@ object DatabaseModel {
         context,
         AppDatabase::class.java,
         DB_NAME
-    ).fallbackToDestructiveMigration().build() //TODO: hope you understand what is fallbackToDestructiveMigration
+    ).build()
 
     @Singleton
     @Provides

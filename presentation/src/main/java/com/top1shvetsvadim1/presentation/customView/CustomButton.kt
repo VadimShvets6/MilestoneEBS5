@@ -5,18 +5,16 @@ import android.content.res.TypedArray
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
-import com.top1shvetsvadim1.presentation.R
+import com.top1shvetsvadim1.coreui.Drawable
+import com.top1shvetsvadim1.coreui.Stylable
+import com.top1shvetsvadim1.coreui.getTypedArray
 import com.top1shvetsvadim1.presentation.databinding.CustomButtonBinding
 
 class CustomButton @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0,
 ) : ConstraintLayout(context, attrs, defStyleAttr) {
-    //TODO: very bad code formatting!!!
-    private val viewBinding =
-    CustomButtonBinding.inflate(
-    LayoutInflater.from(context), this,
-    true
-    )
+
+    private val viewBinding = CustomButtonBinding.inflate(LayoutInflater.from(context), this, true)
 
 
     init {
@@ -26,29 +24,19 @@ class CustomButton @JvmOverloads constructor(
     }
 
     private fun initAttributes(context: Context, attrs: AttributeSet) {
-        val attr: TypedArray =
-            getTypedArray(context, attrs, com.top1shvetsvadim1.coreui.R.styleable.CustomButton)
+        val attr: TypedArray = getTypedArray(context, attrs, Stylable.CustomButton)
 
         viewBinding.apply {
             cartButtonInBottomBar.setImageResource(
                 attr.getResourceId(
-                    //TODO: replace com.top1shvetsvadim1.coreui.R.styleable with Stylable
-                    com.top1shvetsvadim1.coreui.R.styleable.CustomButton_leftImage,
-                    com.top1shvetsvadim1.coreui.R.drawable.ic_buschet
+                    Stylable.CustomButton_leftImage,
+                    Drawable.ic_buschet
                 )
             )
-            middleText.text = attr.getString(com.top1shvetsvadim1.coreui.R.styleable.CustomButton_centerText)
-            cartText.text = attr.getString(com.top1shvetsvadim1.coreui.R.styleable.CustomButton_rightImage)
+            middleText.text = attr.getString(Stylable.CustomButton_centerText)
+            cartText.text = attr.getString(Stylable.CustomButton_rightImage)
 
         }
-        //TODO: typed array is not recycled
-    }
-
-    private fun getTypedArray(
-        context: Context,
-        attributeSet: AttributeSet,
-        attr: IntArray
-    ): TypedArray {
-        return context.obtainStyledAttributes(attributeSet, attr, 0, 0)
+        attr.recycle()
     }
 }

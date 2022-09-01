@@ -1,6 +1,7 @@
-package com.top1shvetsvadim1.domain
+package com.top1shvetsvadim1.domain.models
 
 import com.squareup.moshi.JsonClass
+import com.top1shvetsvadim1.domain.uimodels.ProductUIModel
 import kotlinx.coroutines.flow.Flow
 
 @JsonClass(generateAdapter = true)

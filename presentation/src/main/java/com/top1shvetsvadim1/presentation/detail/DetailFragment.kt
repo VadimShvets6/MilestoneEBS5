@@ -10,8 +10,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
+import com.top1shvetsvadim1.coreui.BaseAdapter
 import com.top1shvetsvadim1.coreui.Colors
-import com.top1shvetsvadim1.coreutils.BaseAdapter
 import com.top1shvetsvadim1.coreutils.BaseFragment
 import com.top1shvetsvadim1.presentation.R
 import com.top1shvetsvadim1.presentation.databinding.FragmentDetailBinding
@@ -52,14 +52,14 @@ class DetailFragment : BaseFragment<DetailState, DetailEvent, DetailViewModel, F
         Log.d("OnError", "handelEffect: $effect")
         when (effect) {
             DetailEvent.GeneralException -> {
-                with(binding){
+                with(binding) {
                     linear2.isVisible = false
                     error.isVisible = true
                     error.text = getString(R.string.hint_general_error)
                 }
             }
             DetailEvent.ShowNoInternet -> {
-                with(binding){
+                with(binding) {
                     linear2.isVisible = false
                     error.isVisible = true
                     error.text = getString(R.string.hint_check_internet)

@@ -7,8 +7,3 @@ import dagger.hilt.android.HiltAndroidApp
 class App : Application()
 
 //Global TODOs
-//TODO: selectors -> exit/enter fade
-//TODO: main screen: UI issue on pressing favourite button
-//TODO: unstructured domain
-//TODO: UIModels in domain
-//TODO: DTOs in domain

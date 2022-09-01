@@ -2,9 +2,8 @@ package com.top1shvetsvadim1.coreutils
 
 import androidx.recyclerview.widget.DiffUtil
 
-//TODO: unused constructor param
-class DefaultDiffUtil(delegates: List<ItemDelegate<BaseUIModel, BaseViewHolder<BaseUIModel>>>) :
-    DiffUtil.ItemCallback<BaseUIModel>() {
+
+class DefaultDiffUtil : DiffUtil.ItemCallback<BaseUIModel>() {
     override fun areItemsTheSame(oldItem: BaseUIModel, newItem: BaseUIModel): Boolean {
         return oldItem.areItemsTheSame(newItem)
     }
