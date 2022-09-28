@@ -58,14 +58,14 @@ class ToolbarView @JvmOverloads constructor(
         viewBinding.rightIcon.setImageResource(image)
     }
 
-    fun setClickOnLeftImage(click: () -> Unit) {
-        viewBinding.leftIcon.setOnClickListener {
+    fun setClickOnRightImage(click: () -> Unit) {
+        viewBinding.rightIcon.setOnClickListener {
             click()
         }
     }
 
-    fun setClickOnRightImage(click: () -> Unit) {
-        viewBinding.rightIcon.setOnClickListener {
+    fun setClickOnLeftImage(click: () -> Unit) {
+        viewBinding.leftIcon.setOnClickListener {
             click()
         }
     }

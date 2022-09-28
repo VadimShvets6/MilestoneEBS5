@@ -3,14 +3,16 @@ package com.top1shvetsvadim1.presentation.favorite
 import com.top1shvetsvadim1.coreutils.BaseViewModel
 import com.top1shvetsvadim1.coreutils.Reducer
 import com.top1shvetsvadim1.coreutils.run
-import com.top1shvetsvadim1.domain.models.ProductResponse
 import com.top1shvetsvadim1.domain.useCase.GetFavoriteProductListUseCase
+import com.top1shvetsvadim1.domain.useCase.ProductUIResponse
 import com.top1shvetsvadim1.domain.useCase.RemoveProductFromFavoriteUseCase
+import com.top1shvetsvadim1.presentation.delegate.ProductUIModel
 import com.top1shvetsvadim1.presentation.mvi.FavoriteEvent
 import com.top1shvetsvadim1.presentation.mvi.FavoriteIntent
 import com.top1shvetsvadim1.presentation.mvi.FavoriteState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 @HiltViewModel
@@ -24,16 +26,31 @@ class FavoriteViewModel @Inject constructor(
     override fun handleAction(action: FavoriteIntent) {
         when (action) {
             FavoriteIntent.LoadItems -> loadItems()
-            is FavoriteIntent.RemoveItemFromFavorite -> removeItemFromFavorite(action.id)
+            is FavoriteIntent.RemoveItemFromFavorite -> removeProductFromFavoriteUseCase.run(
+                summoner = this,
+                params = action.id
+            )
         }
     }
 
-    private fun removeItemFromFavorite(id: Int) {
-        removeProductFromFavoriteUseCase.run(summoner = this, params = id)
-    }
-
     private fun loadItems() {
-        getFavoriteProductListUseCase.run(this)
+        getFavoriteProductListUseCase.run(this) {
+            it.result.map { list ->
+                list.map { item ->
+                    ProductUIModel(
+                        name = item.name,
+                        sizes = item.size,
+                        price = item.price,
+                        mainImage = item.mainImage,
+                        id = item.id,
+                        isFavorite = item.isFavorite,
+                        inCart = item.inCart
+                    )
+                }
+            }.let { flow ->
+                ProductUIResponse(flow)
+            }
+        }
     }
 
     inner class FavoriteReducer :
@@ -53,14 +70,13 @@ class FavoriteViewModel @Inject constructor(
 
         override suspend fun handlePayload(payload: Any) {
             when (payload) {
-                is ProductResponse -> sendState(
+                is ProductUIResponse -> sendState(
                     currentState.copy(
-                        items = payload.result,
+                        items = payload.flow,
                         isLoading = false
                     )
                 )
-                //TODO: else
-                else -> sendState(
+                Unit -> sendState(
                     currentState.copy(isLoading = false)
                 )
             }

@@ -1,15 +1,17 @@
 package com.top1shvetsvadim1.presentation.detail
 
 import android.util.Log
+import com.top1shvetsvadim1.coreui.Colors
+import com.top1shvetsvadim1.coreui.Dimen
+import com.top1shvetsvadim1.coreui.Font
+import com.top1shvetsvadim1.coreui.Strings
 import com.top1shvetsvadim1.coreutils.*
-import com.top1shvetsvadim1.domain.uimodels.DescriptionUIModel
-import com.top1shvetsvadim1.domain.uimodels.DetailProductUIModel
-import com.top1shvetsvadim1.domain.uimodels.ImageUIModel
-import com.top1shvetsvadim1.domain.useCase.ChangeStateItemUseCase
-import com.top1shvetsvadim1.domain.useCase.CheckIfElementIsFavoriteUseCase
-import com.top1shvetsvadim1.domain.useCase.DetailsResponse
-import com.top1shvetsvadim1.domain.useCase.GetItemByIdUseCase
-import com.top1shvetsvadim1.presentation.mvi.CartIntent
+import com.top1shvetsvadim1.domain.models.Parameters
+import com.top1shvetsvadim1.domain.models.TextTypes
+import com.top1shvetsvadim1.domain.useCase.*
+import com.top1shvetsvadim1.presentation.delegate.DetailProductUIModel
+import com.top1shvetsvadim1.presentation.delegate.ImageUIModel
+import com.top1shvetsvadim1.presentation.delegate.ItemText
 import com.top1shvetsvadim1.presentation.mvi.DetailEvent
 import com.top1shvetsvadim1.presentation.mvi.DetailIntent
 import com.top1shvetsvadim1.presentation.mvi.DetailState
@@ -24,7 +26,9 @@ import javax.inject.Inject
 class DetailViewModel @Inject constructor(
     private val getItemByIdUseCase: GetItemByIdUseCase,
     private val changeStateItemUseCase: ChangeStateItemUseCase,
-    private val checkIfElementIsFavoriteUseCase: CheckIfElementIsFavoriteUseCase
+    private val checkIfElementIsFavoriteUseCase: CheckIfElementIsFavoriteUseCase,
+    private val addItemToCartUseCase: AddItemToCartUseCase,
+    private val getDataFormDatastoreUseCase: GetDataFormDatastoreUseCase
 ) : BaseViewModel<DetailIntent, DetailState, DetailEvent>() {
 
 
@@ -40,15 +44,26 @@ class DetailViewModel @Inject constructor(
                 changeStateItem(action.id)
                 checkIfItemIsFavorite(action.id)
             }
+            is DetailIntent.AddItemToCart -> addItemToCart(action.id)
+            is DetailIntent.Remote -> getString(action.param, action.key)
         }
     }
 
+    private fun addItemToCart(id: Int) {
+        addItemToCartUseCase.run(summoner = this, params = id, emitLoading = true)
+    }
+
     private fun checkIfItemIsFavorite(id: Int) {
-        checkIfElementIsFavoriteUseCase.collect(summoner = this, params = id)
+        checkIfElementIsFavoriteUseCase.collect(summoner = this, params = id, emitLoading = false)
     }
 
     private fun changeStateItem(id: Int) {
-        changeStateItemUseCase.run(summoner = this, params = id)
+        changeStateItemUseCase.run(summoner = this, params = id, emitLoading = false)
+    }
+
+    private fun getString(param: Parameters, key: String) {
+        Log.d("Remote", "RemoteKey: $key")
+        getDataFormDatastoreUseCase.collect(summoner = this, params = ParametersRemote(param, key), emitLoading = false)
     }
 
     private fun loadItem(id: Int) {
@@ -67,7 +82,24 @@ class DetailViewModel @Inject constructor(
                             price = item.price
                         )
                     )
-                    add(DescriptionUIModel(id = item.id, description = item.details))
+                    add(
+                        ItemText(
+                            tag = item.id,
+                            size = Dimen.text_size_big,
+                            font = Font.open_sans_extrabold,
+                            color = Colors.color_main_07195C,
+                            text = TextTypes.ResText(Strings.information_text_view)
+                        )
+                    )
+                    add(
+                        ItemText(
+                            tag = item.id,
+                            size = Dimen.text_size_small_11_ssp,
+                            font = Font.open_sans_regular,
+                            color = Colors.text_description_424A56,
+                            text = TextTypes.StringText(item.details)
+                        )
+                    )
                 }
             }.let { flow ->
                 DetailsResponse(flow)
@@ -119,8 +151,13 @@ class DetailViewModel @Inject constructor(
                         isFavorite = payload
                     )
                 )
-                //TODO: do not use else in reducers
-                else -> {
+                is String -> sendState(
+                    currentState.copy(
+                        text = payload,
+                        color = payload
+                    )
+                )
+                Unit -> {
                     sendState(
                         currentState.copy(
                             isLoading = false

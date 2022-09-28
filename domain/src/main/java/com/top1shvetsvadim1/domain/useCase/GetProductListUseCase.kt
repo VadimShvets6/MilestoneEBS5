@@ -1,30 +1,23 @@
 package com.top1shvetsvadim1.domain.useCase
 
-import com.top1shvetsvadim1.coreutils.UseCaseNoParams
+import com.top1shvetsvadim1.coreutils.BaseUIModel
+import com.top1shvetsvadim1.coreutils.UseCase
 import com.top1shvetsvadim1.domain.models.ProductResponse
 import com.top1shvetsvadim1.domain.repository.ProductRepository
-import com.top1shvetsvadim1.domain.uimodels.ProductUIModel
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class GetProductListUseCase @Inject constructor(
     private val repository: ProductRepository
-) : UseCaseNoParams<ProductResponse> {
+) : UseCase<String, ProductResponse> {
 
-    override suspend operator fun invoke() = repository.getProductList().map {
-        it.map { entity ->
-            ProductUIModel(
-                name = entity.name,
-                sizes = entity.size,
-                price = entity.price,
-                mainImage = entity.mainImage,
-                id = entity.id,
-                isFavorite = entity.isFavorite,
-                inCart = entity.inCart
-            )
-        }
-    }.let {
-        ProductResponse(it)
+    override suspend operator fun invoke(params: String): ProductResponse {
+        return ProductResponse(repository.getProductList(params))
     }
 }
+
+@JvmInline
+value class ProductUIResponse(
+    val flow: Flow<List<BaseUIModel>>
+)
 

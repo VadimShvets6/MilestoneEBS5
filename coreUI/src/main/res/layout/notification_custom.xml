@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <Button
+        android:id="@+id/favorite"
+        android:layout_width="wrap_content"
+        style="?attr/buttonBarButtonStyle"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/purple_200"
+        android:text="@string/favorites_text_view"/>
+
+    <Button
+        android:id="@+id/myCart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="?attr/buttonBarButtonStyle"
+        android:textColor="@color/white"
+        android:layout_weight="1"
+        android:backgroundTint="@color/color_main_07195C"
+        android:text="@string/my_cart"/>
+
+</LinearLayout>

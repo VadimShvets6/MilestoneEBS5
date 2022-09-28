@@ -1,12 +1,18 @@
 package com.top1shvetsvadim1.coreutils
 
-interface BaseUIModel {
+import com.flexeiprata.novalles.interfaces.UIModelHelper
 
-    fun areItemsTheSame(other: BaseUIModel): Boolean
+abstract class BaseUIModel {
 
-    fun areContentsTheSame(other: BaseUIModel): Boolean
+    fun areItemsTheSame(other: BaseUIModel, helper: UIModelHelper<BaseUIModel>): Boolean {
+        return helper.areItemsTheSame(this, other)
+    }
 
-    fun changePayload(other: BaseUIModel): Any
+    fun areContentTheSame(other: BaseUIModel, helper: UIModelHelper<BaseUIModel>): Boolean {
+        return helper.areContentsTheSame(this, other)
+    }
+
+    fun changePayload(other: BaseUIModel, helper: UIModelHelper<BaseUIModel>): List<Any> {
+        return helper.changePayloads(this, other)
+    }
 }
-
-interface Payloadable

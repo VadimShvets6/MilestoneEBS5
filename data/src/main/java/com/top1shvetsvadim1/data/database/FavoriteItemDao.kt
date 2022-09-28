@@ -4,7 +4,6 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.top1shvetsvadim1.domain.models.ProductEntity
 import com.top1shvetsvadim1.domain.models.ProductFavorite
 import com.top1shvetsvadim1.domain.models.ProductsInCarts
 import kotlinx.coroutines.flow.Flow

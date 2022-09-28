@@ -8,7 +8,7 @@ import javax.inject.Inject
 class CheckIfElementIsFavoriteUseCase @Inject constructor(
     private val repository: ProductRepository
 ) : UseCase<Int, Flow<Boolean>> {
-    override suspend fun invoke(params: Int) : Flow<Boolean> {
+    override suspend fun invoke(params: Int): Flow<Boolean> {
         return repository.checkIfElementIsFavorite(params)
     }
 }

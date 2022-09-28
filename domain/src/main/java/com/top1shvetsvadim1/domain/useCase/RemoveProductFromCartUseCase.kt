@@ -6,7 +6,7 @@ import javax.inject.Inject
 
 class RemoveProductFromCartUseCase @Inject constructor(
     private val repository: ProductRepository
-): UseCase<Int, Unit> {
+) : UseCase<Int, Unit> {
     override suspend fun invoke(params: Int) {
         repository.removeProductItemFromCart(params)
     }

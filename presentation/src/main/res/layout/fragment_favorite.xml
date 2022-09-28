@@ -24,8 +24,6 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-
-    <!-- TODO: I think that it is an unnecessary parent and you can use root constraint layout -->
     <LinearLayout
         android:id="@+id/linear1"
         android:layout_width="match_parent"
@@ -78,7 +76,7 @@
                 android:id="@+id/tvSortBy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="sort by"
+                android:text="@string/sort_by"
                 android:layout_gravity="center"
                 android:textColor="@color/color_main_07195C"
                 android:fontFamily="@font/open_sans_semi_bold"
@@ -101,6 +99,7 @@
         android:layout_marginStart="@dimen/_12sdp"
         android:layout_marginEnd="@dimen/_12sdp"
         android:layout_marginTop="@dimen/_12sdp"
+        android:paddingBottom="@dimen/_20sdp"
         tools:listitem="@layout/product_item"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintTop_toBottomOf="@id/linear1"

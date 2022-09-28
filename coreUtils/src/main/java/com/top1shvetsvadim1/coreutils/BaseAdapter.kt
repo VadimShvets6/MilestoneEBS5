@@ -1,24 +1,17 @@
-package com.top1shvetsvadim1.coreui
+package com.top1shvetsvadim1.coreutils
 
 import android.view.LayoutInflater
-import android.view.View
-import android.view.View.inflate
 import android.view.ViewGroup
-import androidx.appcompat.resources.Compatibility.Api21Impl.inflate
-import androidx.core.content.res.ColorStateListInflaterCompat.inflate
 import androidx.recyclerview.widget.ListAdapter
-import androidx.viewbinding.ViewBinding
-import com.top1shvetsvadim1.coreutils.BaseUIModel
-import com.top1shvetsvadim1.coreutils.BaseViewHolder
-import com.top1shvetsvadim1.coreutils.DefaultDiffUtil
+import com.flexeiprata.novalles.interfaces.Novalles
+import com.flexeiprata.novalles.interfaces.UIModelHelper
 import kotlin.reflect.KClass
 
 class BaseAdapter private constructor(private val delegates: List<ItemDelegate<BaseUIModel, BaseViewHolder<BaseUIModel>>>) :
-    ListAdapter<BaseUIModel, BaseViewHolder<BaseUIModel>>(DefaultDiffUtil()) {
+    ListAdapter<BaseUIModel, BaseViewHolder<BaseUIModel>>(DefaultDiffUtil(delegates)) {
 
     override fun getItemViewType(position: Int): Int {
-        return delegates.find { it.clazz == getItem(position)::class }
-            ?.let { delegates.indexOf(it) }
+        return delegates.find { it.clazz == getItem(position)::class }?.let { delegates.indexOf(it) }
             ?: throw Exception("Unregistered viewHolder")
     }
 
@@ -66,8 +59,14 @@ class BaseAdapter private constructor(private val delegates: List<ItemDelegate<B
 }
 
 abstract class ItemDelegate<T : BaseUIModel, H : BaseViewHolder<T>>(
-    val clazz: KClass<T>
+    val clazz: KClass<T>,
+    //instructor: KClass<out Instructor>,
 ) {
+
+    val uiModelHelper: UIModelHelper<T> = Novalles.provideUiInterfaceFor(clazz)
+
+    //protected val inspector = Novalles.provideInspectorFromUiModel(instructor as KClass<Instructor>)
+
     fun getOrCreateViewHolder(inflater: LayoutInflater, parent: ViewGroup): H {
         return createViewHolder(inflater, parent)
     }
@@ -79,6 +78,11 @@ abstract class ItemDelegate<T : BaseUIModel, H : BaseViewHolder<T>>(
     abstract fun createViewHolder(inflater: LayoutInflater, parent: ViewGroup): H
 
     open fun onBindViewHolder(holder: H, item: T, payload: MutableList<Any>) {
+//        val instructor = provideInstructor(holder, item, payload)
+//        inspector.inspectPayloads(payload, instructor) {
+//            holder.bind(item)
+//        }
+        // holder.setOnClickListeners(item)
         holder.bind(item)
         holder.setOnClickListeners(item)
     }

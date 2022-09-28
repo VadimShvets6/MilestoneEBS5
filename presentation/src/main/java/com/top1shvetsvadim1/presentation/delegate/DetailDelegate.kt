@@ -1,20 +1,41 @@
 package com.top1shvetsvadim1.presentation.delegate
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import com.top1shvetsvadim1.coreui.ItemDelegate
+import com.flexeiprata.novalles.annotations.AutoBindViewHolder
+import com.flexeiprata.novalles.annotations.Instruction
+import com.flexeiprata.novalles.annotations.PrimaryTag
+import com.flexeiprata.novalles.annotations.UIModel
+import com.flexeiprata.novalles.interfaces.Instructor
+import com.flexeiprata.novalles.interfaces.Novalles
+import com.top1shvetsvadim1.coreutils.BaseUIModel
 import com.top1shvetsvadim1.coreutils.BaseViewHolder
-import com.top1shvetsvadim1.domain.uimodels.DetailProductUIModel
-import com.top1shvetsvadim1.presentation.R
+import com.top1shvetsvadim1.coreutils.ItemDelegate
 import com.top1shvetsvadim1.presentation.databinding.DetailProductItemBinding
 import java.util.*
+
+@UIModel
+data class DetailProductUIModel(
+    @PrimaryTag val id: Int,
+    val name: String,
+    val size: String,
+    val price: Int,
+) : BaseUIModel()
+
+@Instruction(DetailProductUIModel::class)
+@AutoBindViewHolder(DetailProductDelegate.DetailProductViewHolder::class)
+class DetailInstructor : Instructor
 
 class DetailProductDelegate :
     ItemDelegate<DetailProductUIModel, DetailProductDelegate.DetailProductViewHolder>(
         DetailProductUIModel::class
     ) {
-    override fun createViewHolder(inflater: LayoutInflater, parent: ViewGroup): DetailProductDelegate.DetailProductViewHolder {
+    private val inspector = Novalles.provideInspectorFromUiModel(DetailProductUIModel::class)
+
+    override fun createViewHolder(
+        inflater: LayoutInflater,
+        parent: ViewGroup
+    ): DetailProductDelegate.DetailProductViewHolder {
         return DetailProductViewHolder(DetailProductItemBinding.inflate(inflater, parent, false))
     }
 
@@ -23,18 +44,9 @@ class DetailProductDelegate :
         item: DetailProductUIModel,
         payload: MutableList<Any>
     ) {
-        val payloads = payload.firstOrNull() as List<DetailProductUIModel.DetailProductPayloads>?
-
-        if (payloads.isNullOrEmpty()) {
-            super.onBindViewHolder(holder, item, payload)
-        } else {
-            payloads.forEach {
-                when (it) {
-                    is DetailProductUIModel.DetailProductPayloads.PriceChanged -> holder.setPrice(
-                        it.newPrice
-                    )
-                }
-            }
+        val instructor = DetailInstructor()
+        inspector.inspectPayloads(payload, instructor, viewHolder = holder) {
+            holder.bind(item)
         }
     }
 
@@ -60,7 +72,4 @@ class DetailProductDelegate :
         }
     }
 }
-
-//TODO: Create ItemText (it is a big task). There will be text, margin, fontSize, color, style and etc. You can use Novalles, if you think you understand payloding.
-
 

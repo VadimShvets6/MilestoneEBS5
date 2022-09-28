@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -8,96 +8,95 @@
     android:backgroundTint="@color/white"
     android:layout_height="wrap_content">
 
-    <!-- TODO: card view MUST have some paddings to show its elevation. Test it well -->
-
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <View
-            android:layout_marginStart="@dimen/_12sdp"
-            android:layout_marginEnd="@dimen/_12sdp"
-            android:layout_marginTop="@dimen/_4sdp"
-            android:background="#E5EBE9"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_1sdp"/>
+            android:layout_height="@dimen/_1sdp"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:background="#E5EBE9" />
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <ImageView
                 android:id="@+id/ivProduct"
-                android:layout_marginTop="@dimen/_12sdp"
-                android:layout_marginStart="@dimen/_12sdp"
-                android:contentDescription="@string/app_name"
                 android:layout_width="@dimen/_93sdp"
-                android:layout_height="@dimen/_80sdp"/>
+                android:layout_height="@dimen/_80sdp"
+                android:layout_marginStart="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:contentDescription="@string/app_name" />
 
             <LinearLayout
-                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_12sdp"
                 android:layout_marginTop="@dimen/_12sdp"
                 android:layout_marginBottom="@dimen/_9sdp"
-                android:layout_marginStart="@dimen/_12sdp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/tvProductName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans_extrabold"
+                    android:textColor="@color/color_main_07195C"
                     android:textSize="@dimen/_14ssp"
                     android:textStyle="bold"
-                    tools:text="Apple Iphone 11"
-                    android:textColor="@color/color_main_07195C"
-                    android:fontFamily="@font/open_sans_extrabold" />
+                    tools:text="Apple Iphone 11" />
 
                 <TextView
                     android:id="@+id/tvSize"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/_11ssp"
                     android:layout_marginTop="@dimen/_6sdp"
-                    android:maxLines="2"
                     android:ellipsize="end"
-                    tools:text="iOS, 5.5, GPS, 256 GB, 12 mpx"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:maxLines="2"
                     android:textColor="#424A56"
-                    android:fontFamily="@font/open_sans_regular" />
+                    android:textSize="@dimen/_11ssp"
+                    tools:text="iOS, 5.5, GPS, 256 GB, 12 mpx" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_marginTop="@dimen/_6sdp"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_6sdp">
 
                     <TextView
                         android:id="@+id/tvPrice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/open_sans_semibold"
-                        android:textSize="@dimen/_14ssp"
                         android:textColor="#035A97"
-                        tools:text="$ 980,-"/>
+                        android:textSize="@dimen/_14ssp"
+                        tools:text="$ 980,-" />
 
                     <TextView
                         android:id="@+id/tvSmallPrice"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:fontFamily="@font/open_sans_semibold"
-                        android:textSize="@dimen/_11ssp"
                         android:layout_gravity="top"
+                        android:layout_marginStart="@dimen/_6sdp"
+                        android:fontFamily="@font/open_sans_semibold"
                         android:gravity="top"
                         android:textColor="#9CB1BC"
-                        android:layout_marginStart="@dimen/_6sdp"
-                        tools:text="$ 980,-"/>
+                        android:textSize="@dimen/_11ssp"
+                        tools:text="$ 980,-" />
 
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_marginTop="@dimen/_12sdp"
                     android:layout_width="wrap_content"
-                    android:layout_height="@dimen/_45sdp">
+                    android:layout_height="@dimen/_45sdp"
+                    android:layout_marginTop="@dimen/_12sdp">
 
                     <com.google.android.material.floatingactionbutton.FloatingActionButton
                         android:id="@+id/buttonHeart"
@@ -106,27 +105,27 @@
                         android:adjustViewBounds="false"
                         android:backgroundTint="@color/white"
                         android:contentDescription="@string/app_name"
+                        android:cropToPadding="false"
                         android:src="@drawable/animated_selector"
                         app:backgroundTint="@color/white"
                         app:fabSize="mini"
-                        android:cropToPadding="false"
                         app:tint="#E3453A"
-                        tools:ignore="SpeakableTextPresentCheck,DuplicateSpeakableTextCheck"/>
+                        tools:ignore="SpeakableTextPresentCheck,DuplicateSpeakableTextCheck" />
 
                     <com.google.android.material.floatingactionbutton.FloatingActionButton
                         android:id="@+id/buttonBuschet"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:adjustViewBounds="false"
                         android:layout_marginStart="@dimen/_12sdp"
-                        android:backgroundTint="@drawable/animated_selector_cart"
+                        android:adjustViewBounds="false"
+                        android:backgroundTint="@color/white"
                         android:contentDescription="@string/app_name"
+                        android:cropToPadding="false"
                         android:src="@drawable/animated_selector_buschet"
                         app:backgroundTint="@drawable/animated_selector_cart"
                         app:fabSize="mini"
-                        android:cropToPadding="false"
                         app:tint="@drawable/animated_selector_cart_tine"
-                        tools:ignore="SpeakableTextPresentCheck, DuplicateSpeakableTextCheck"/>
+                        tools:ignore="SpeakableTextPresentCheck, DuplicateSpeakableTextCheck" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -135,4 +134,4 @@
 
     </LinearLayout>
 
-</androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

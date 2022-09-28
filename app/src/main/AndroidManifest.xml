@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.top1shvetsvadim1.milestoneebs5">
 
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
@@ -19,6 +21,7 @@
         tools:targetApi="31">
         <activity
             android:name=".MainActivity"
+            android:windowSoftInputMode="adjustResize"
             android:theme="@style/Theme.App.Starting"
             android:exported="true">
             <intent-filter>
@@ -27,6 +30,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <service
+            android:name="com.top1shvetsvadim1.data.service.NotificationFirebase"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <meta-data android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_favorite_main"/>
+        <service android:name=".NotificationForeground"/>
+        <receiver android:name=".MyReceiver"/>
     </application>
 
 </manifest>

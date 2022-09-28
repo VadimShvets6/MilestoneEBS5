@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 5,
-    "identityHash": "6c25f1207d4f196079a6133a46f4b077",
+    "identityHash": "7dc0486c1cad38f2ebf66627759d9118",
     "entities": [
       {
         "tableName": "items",
@@ -68,7 +68,7 @@
       },
       {
         "tableName": "cart_items",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `name` TEXT NOT NULL, `details` TEXT NOT NULL, `size` TEXT NOT NULL, `colour` TEXT NOT NULL, `price` INTEGER NOT NULL, `mainImage` TEXT NOT NULL, `inCart` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `name` TEXT NOT NULL, `details` TEXT NOT NULL, `size` TEXT NOT NULL, `colour` TEXT NOT NULL, `price` INTEGER NOT NULL, `count` INTEGER NOT NULL, `mainImage` TEXT NOT NULL, `inCart` INTEGER NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -107,6 +107,12 @@
             "notNull": true
           },
           {
+            "fieldPath": "count",
+            "columnName": "count",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
             "fieldPath": "mainImage",
             "columnName": "mainImage",
             "affinity": "TEXT",
@@ -132,7 +138,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '6c25f1207d4f196079a6133a46f4b077')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '7dc0486c1cad38f2ebf66627759d9118')"
     ]
   }
 }

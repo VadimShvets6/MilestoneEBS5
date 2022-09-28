@@ -3,6 +3,8 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'dagger.hilt.android.plugin'
     id 'kotlin-kapt'
+    id 'com.google.gms.google-services'
+    id 'com.google.firebase.crashlytics'
 }
 
 android {
@@ -51,14 +53,16 @@ dependencies {
     implementation project(path: ':domain')
     implementation project(path: ':coreUI')
     implementation project(path: ':coreUtils')
+
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
     kapt("com.google.dagger:hilt-android-compiler:2.43.1")
 
+
+
     implementation 'androidx.navigation:navigation-fragment-ktx:2.5.1'
     implementation 'androidx.navigation:navigation-ui-ktx:2.5.1'
-
 
     implementation 'androidx.core:core-splashscreen:1.0.0'
 

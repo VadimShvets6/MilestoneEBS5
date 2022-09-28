@@ -10,4 +10,10 @@
     <color name="color_main_07195C">#07195C</color>
     <color name="snack_bar_no_internet">#E31818</color>
     <color name="button_bg">#7740A2</color>
+    <color name="text_description_424A56">#424A56</color>
+    <color name="text_color_252C32">#252C32</color>
+    <color name="bg_button_E5EBE9">#E5EBE9</color>
+    <color name="bg_snack_green">#A5EA56</color>
+    <color name="gray_E5EBE9">#E5EBE9</color>
+    <color name="yellow_FFC107">#FFC107</color>
 </resources>

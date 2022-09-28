@@ -21,7 +21,7 @@ object DatabaseModel {
         context,
         AppDatabase::class.java,
         DB_NAME
-    ).build()
+    ).fallbackToDestructiveMigration().build()
 
     @Singleton
     @Provides

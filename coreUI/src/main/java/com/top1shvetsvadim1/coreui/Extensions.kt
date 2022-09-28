@@ -4,10 +4,13 @@ import android.content.Context
 import android.content.res.TypedArray
 import android.util.AttributeSet
 
-typealias Stylable = com.top1shvetsvadim1.coreui.R.styleable
-typealias Drawable = com.top1shvetsvadim1.coreui.R.drawable
-typealias Colors = com.top1shvetsvadim1.coreui.R.color
-typealias Anim = com.top1shvetsvadim1.coreui.R.anim
+typealias Stylable = R.styleable
+typealias Drawable = R.drawable
+typealias Colors = R.color
+typealias Anim = R.anim
+typealias Dimen = R.dimen
+typealias Font = R.font
+typealias Strings = R.string
 
 fun getTypedArray(
     context: Context,

@@ -45,21 +45,23 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <!-- TODO: I am not sure if on design buttons are different sized -->
-
         <Button
-            android:layout_width="wrap_content"
+            android:id="@+id/addToCart"
+            android:layout_width="@dimen/_135sdp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            style="?attr/buttonBarButtonStyle"
             android:textSize="@dimen/_11ssp"
             android:backgroundTint="@color/color_main_07195C"
             android:textColor="@color/white"
             android:layout_marginEnd="@dimen/_12sdp"
             android:text="@string/add_to_cart_title_button" />
         <Button
-            android:layout_width="wrap_content"
+            android:id="@+id/buyNow"
+            android:layout_width="@dimen/_135sdp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            style="?attr/buttonBarButtonStyle"
             android:textSize="@dimen/_11ssp"
             android:textColor="@color/white"
             android:backgroundTint="#7740A2"

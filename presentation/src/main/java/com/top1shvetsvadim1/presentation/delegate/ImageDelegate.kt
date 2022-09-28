@@ -1,22 +1,38 @@
 package com.top1shvetsvadim1.presentation.delegate
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import coil.load
-import com.top1shvetsvadim1.coreui.ItemDelegate
+import com.flexeiprata.novalles.annotations.AutoBindViewHolder
+import com.flexeiprata.novalles.annotations.Instruction
+import com.flexeiprata.novalles.annotations.PrimaryTag
+import com.flexeiprata.novalles.annotations.UIModel
+import com.flexeiprata.novalles.interfaces.Instructor
+import com.flexeiprata.novalles.interfaces.Novalles
+import com.top1shvetsvadim1.coreutils.BaseUIModel
 import com.top1shvetsvadim1.coreutils.BaseViewHolder
-import com.top1shvetsvadim1.domain.uimodels.ImageUIModel
-import com.top1shvetsvadim1.presentation.R
+import com.top1shvetsvadim1.coreutils.ItemDelegate
 import com.top1shvetsvadim1.presentation.databinding.ImageDetailItemBinding
+
+@UIModel
+data class ImageUIModel(
+    @PrimaryTag val id: Int,
+    val image: String
+) : BaseUIModel()
+
+@Instruction(ImageUIModel::class)
+@AutoBindViewHolder(ImageDelegate.ImageDetailViewHolder::class)
+class ImageInstructor : Instructor
 
 class ImageDelegate :
     ItemDelegate<ImageUIModel, ImageDelegate.ImageDetailViewHolder>(
         ImageUIModel::class
     ) {
 
+    private val inspector = Novalles.provideInspectorFromUiModel(ImageUIModel::class)
+
     override fun createViewHolder(inflater: LayoutInflater, parent: ViewGroup): ImageDetailViewHolder {
-        return ImageDetailViewHolder(ImageDetailItemBinding.inflate(inflater,parent,false))
+        return ImageDetailViewHolder(ImageDetailItemBinding.inflate(inflater, parent, false))
     }
 
     override fun onBindViewHolder(
@@ -24,16 +40,9 @@ class ImageDelegate :
         item: ImageUIModel,
         payload: MutableList<Any>
     ) {
-        val payloads = payload.firstOrNull() as List<ImageUIModel.ImagePayloads>?
-
-        if (payloads.isNullOrEmpty()) {
-            super.onBindViewHolder(holder, item, payload)
-        } else {
-            payloads.forEach {
-                when (it) {
-                    is ImageUIModel.ImagePayloads.ImageChanged -> holder.setImage(it.newImage)
-                }
-            }
+        val instructor = ImageInstructor()
+        inspector.inspectPayloads(payload, instructor, viewHolder = holder) {
+            holder.bind(item)
         }
     }
 

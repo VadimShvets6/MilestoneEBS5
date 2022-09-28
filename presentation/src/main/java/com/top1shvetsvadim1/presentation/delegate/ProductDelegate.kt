@@ -1,18 +1,45 @@
 package com.top1shvetsvadim1.presentation.delegate
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import coil.load
-import com.top1shvetsvadim1.coreui.Action
-import com.top1shvetsvadim1.coreui.ItemDelegate
+import com.flexeiprata.novalles.annotations.AutoBindViewHolder
+import com.flexeiprata.novalles.annotations.Instruction
+import com.flexeiprata.novalles.annotations.PrimaryTag
+import com.flexeiprata.novalles.annotations.UIModel
+import com.flexeiprata.novalles.interfaces.Instructor
+import com.flexeiprata.novalles.interfaces.Novalles
+import com.squareup.moshi.JsonClass
+import com.top1shvetsvadim1.coreui.Anim
+import com.top1shvetsvadim1.coreutils.Action
+import com.top1shvetsvadim1.coreutils.BaseUIModel
 import com.top1shvetsvadim1.coreutils.BaseViewHolder
-import com.top1shvetsvadim1.domain.uimodels.ProductPayload
-import com.top1shvetsvadim1.domain.uimodels.ProductUIModel
+import com.top1shvetsvadim1.coreutils.ItemDelegate
 import com.top1shvetsvadim1.presentation.databinding.ProductItemBinding
+
+@JsonClass(generateAdapter = true)
+@UIModel
+data class ProductUIModel(
+    val name: String,
+    val sizes: String,
+    val price: Int,
+    val mainImage: String,
+    @PrimaryTag val id: Int,
+    val isFavorite: Boolean,
+    val inCart: Boolean
+) : BaseUIModel()
+
+@Instruction(ProductUIModel::class)
+@AutoBindViewHolder(ProductDelegate.ProductViewHolder::class)
+class ProductInstructor : Instructor
 
 class ProductDelegate : ItemDelegate<ProductUIModel, ProductDelegate.ProductViewHolder>(
     ProductUIModel::class
 ) {
+    private val inspector = Novalles.provideInspectorFromUiModel(ProductUIModel::class)
+
     override fun createViewHolder(inflater: LayoutInflater, parent: ViewGroup): ProductViewHolder {
         return ProductViewHolder(ProductItemBinding.inflate(inflater, parent, false))
     }
@@ -22,21 +49,10 @@ class ProductDelegate : ItemDelegate<ProductUIModel, ProductDelegate.ProductView
         item: ProductUIModel,
         payload: MutableList<Any>
     ) {
-        val payloads = payload.firstOrNull() as List<ProductPayload>?
-
-        if (payloads.isNullOrEmpty()) {
-            super.onBindViewHolder(holder, item, payload)
-        } else {
-            payloads.forEach {
-                when (it) {
-                    is ProductPayload.FavoriteChange -> holder.setFavorite(it.newStatus)
-                    is ProductPayload.NameChanged -> holder.setName(it.newName)
-                    is ProductPayload.PictureChange -> holder.setPicture(it.newPicture)
-                    is ProductPayload.PriceChange -> holder.setPrice(it.newPrice)
-                    is ProductPayload.SizeChange -> holder.setSize(it.newSize)
-                    is ProductPayload.CartChange -> holder.setCart(it.newStatus)
-                }
-            }
+        Log.d("Test", "OnBind: $payload")
+        val instructor = ProductInstructor()
+        inspector.inspectPayloads(payload, instructor, viewHolder = holder) {
+            holder.bind(item)
         }
         holder.setOnClickListeners(item)
     }
@@ -46,11 +62,21 @@ class ProductDelegate : ItemDelegate<ProductUIModel, ProductDelegate.ProductView
         override fun bind(item: ProductUIModel) {
             setName(item.name)
             setPrice(item.price)
-            setPicture(item.mainImage)
-            setFavorite(item.isFavorite)
-            setCart(item.inCart)
-            setSize(item.sizes)
+            setMainImage(item.mainImage)
+            setIsFavorite(item.isFavorite)
+            setInCart(item.inCart)
+            setSizes(item.sizes)
             setOnClickListeners(item)
+            // setAnim()
+        }
+
+        private fun setAnim() {
+            binding.cardView.startAnimation(
+                AnimationUtils.loadAnimation(
+                    binding.cardView.context,
+                    Anim.anim_recycler
+                )
+            )
         }
 
         override fun setOnClickListeners(item: ProductUIModel) {
@@ -74,19 +100,19 @@ class ProductDelegate : ItemDelegate<ProductUIModel, ProductDelegate.ProductView
             binding.tvSmallPrice.text = "$price"
         }
 
-        fun setPicture(picture: String) {
+        fun setMainImage(picture: String) {
             binding.ivProduct.load(picture)
         }
 
-        fun setFavorite(favorite: Boolean) {
+        fun setIsFavorite(favorite: Boolean) {
             binding.buttonHeart.isActivated = favorite
         }
 
-        fun setCart(cart: Boolean){
+        fun setInCart(cart: Boolean) {
             binding.buttonBuschet.isActivated = cart
         }
 
-        fun setSize(size: String) {
+        fun setSizes(size: String) {
             binding.tvSize.text = size
         }
     }

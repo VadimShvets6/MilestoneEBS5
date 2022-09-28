@@ -5,10 +5,9 @@ import android.view.LayoutInflater
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
-import com.top1shvetsvadim1.coreui.Action
-import com.top1shvetsvadim1.coreui.BaseAdapter
 import com.top1shvetsvadim1.coreui.Drawable
+import com.top1shvetsvadim1.coreutils.Action
+import com.top1shvetsvadim1.coreutils.BaseAdapter
 import com.top1shvetsvadim1.coreutils.BaseFragment
 import com.top1shvetsvadim1.presentation.databinding.FragmentFavoriteBinding
 import com.top1shvetsvadim1.presentation.delegate.ProductDelegate
@@ -32,10 +31,7 @@ class FavoriteFragment :
 
     private fun onItemClick(action: Action) {
         when (action) {
-            //TODO: change your navigation functional.
-            //TODO: 1. Move it to your base fragment and create some base functions.
-            //TODO: 2. Remove anims from XML of navGraph and create it in BaseFragment via NavOptions.
-            is ProductDelegate.ActionProductAdapter.OnProductClicked -> findNavController().navigate(
+            is ProductDelegate.ActionProductAdapter.OnProductClicked -> navigateTo(
                 FavoriteFragmentDirections.actionFavoriteFragmentToDetailFragment(action.productItem.id)
             )
             is ProductDelegate.ActionProductAdapter.OnProductFavoriteClicked -> viewModel.handleAction(
@@ -47,8 +43,6 @@ class FavoriteFragment :
 
     override fun setupViews() {
         binding.rvListFavorite.adapter = favoriteAdapter
-        //TODO: duplicate of row 62. This is a part of state, not of views setup.
-        binding.progressBar.isVisible = true
         binding.toolbar.setRightImage(Drawable.ic_heart_favorites)
     }
 
@@ -66,7 +60,7 @@ class FavoriteFragment :
             }
         }
         binding.toolbar.setClickOnLeftImage {
-            findNavController().popBackStack()
+            popBack()
         }
     }
 

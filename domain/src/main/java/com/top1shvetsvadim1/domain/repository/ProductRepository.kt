@@ -1,12 +1,14 @@
 package com.top1shvetsvadim1.domain.repository
 
+import com.top1shvetsvadim1.coreutils.BaseUIModel
+import com.top1shvetsvadim1.domain.models.LoginResponse
 import com.top1shvetsvadim1.domain.models.ProductEntity
 import com.top1shvetsvadim1.domain.models.ProductFavorite
 import com.top1shvetsvadim1.domain.models.ProductsInCarts
 import kotlinx.coroutines.flow.Flow
 
 interface ProductRepository {
-    suspend fun getProductList(): Flow<List<ProductEntity>>
+    suspend fun getProductList(filter: String = ""): Flow<List<ProductEntity>>
     suspend fun addProductItemToFavorite(id: Int)
     suspend fun removeProductItemFromFavorite(id: Int)
     suspend fun getFavoriteList(): Flow<List<ProductFavorite>>
@@ -15,6 +17,8 @@ interface ProductRepository {
     suspend fun changeStateItem(id: Int)
     suspend fun checkIfElementIsFavorite(id: Int): Flow<Boolean>
     suspend fun addProductItemToCart(id: Int)
+    suspend fun getBaseUIItemList(): Flow<List<BaseUIModel>>
     suspend fun removeProductItemFromCart(id: Int)
-
+    suspend fun postLogin(email: String, password: String): Flow<LoginResponse>
+    suspend fun postRegister(fullName: String, email: String, password: String): LoginResponse
 }

@@ -1,7 +1,12 @@
 package com.top1shvetsvadim1.data
 
+import android.util.Log
+import com.top1shvetsvadim1.coreutils.BaseUIModel
 import com.top1shvetsvadim1.data.database.FavoriteItemDao
 import com.top1shvetsvadim1.data.network.ApiService
+import com.top1shvetsvadim1.data.network.LoginParam
+import com.top1shvetsvadim1.data.network.RegisterPara
+import com.top1shvetsvadim1.domain.models.LoginResponse
 import com.top1shvetsvadim1.domain.models.ProductEntity
 import com.top1shvetsvadim1.domain.models.ProductFavorite
 import com.top1shvetsvadim1.domain.models.ProductsInCarts
@@ -14,9 +19,10 @@ class ProductRepositoryImpl @Inject constructor(
     private val favoriteItemDao: FavoriteItemDao
 ) : ProductRepository {
 
-    override suspend fun getProductList(): Flow<List<ProductEntity>> {
+    override suspend fun getProductList(filter: String): Flow<List<ProductEntity>> {
+        Log.d("Test", "Repo: $filter")
         return combine(
-            flowOf(apiService.getProductList(page = 1).results),
+            flowOf(apiService.getProductList(page = 1, ordering = filter).results),
             getFavoriteList(),
             getCartList()
         ) { products, favorites, carts ->
@@ -30,7 +36,8 @@ class ProductRepositoryImpl @Inject constructor(
                     price = it.price,
                     mainImage = it.mainImage,
                     isFavorite = favorites.map { item -> item.id }.contains(it.id),
-                    inCart = carts.map { item -> item.id }.contains(it.id)
+                    inCart = carts.map { item -> item.id }.contains(it.id),
+                    count = it.count
                 )
             }
         }
@@ -51,7 +58,9 @@ class ProductRepositoryImpl @Inject constructor(
                 colour = productItem.colour,
                 price = productItem.price,
                 mainImage = productItem.mainImage,
-                isFavorite = !productItem.isFavorite
+                isFavorite = !productItem.isFavorite,
+                inCart = productItem.inCart,
+                count = productItem.count
             )
         )
     }
@@ -67,7 +76,9 @@ class ProductRepositoryImpl @Inject constructor(
                 colour = productItem.colour,
                 price = productItem.price,
                 mainImage = productItem.mainImage,
-                inCart = !productItem.inCart
+                inCart = !productItem.inCart,
+                count = productItem.count,
+                isFavorite = productItem.isFavorite
             )
         )
     }
@@ -79,8 +90,9 @@ class ProductRepositoryImpl @Inject constructor(
     override suspend fun getItemById(id: Int): Flow<ProductEntity> {
         return combine(
             flowOf(apiService.getProductById(id)),
+            getCartList(),
             getFavoriteList()
-        ) { product, favorites ->
+        ) { product, favorites, carts ->
             ProductEntity(
                 id = product.id,
                 name = product.name,
@@ -90,7 +102,8 @@ class ProductRepositoryImpl @Inject constructor(
                 price = product.price,
                 mainImage = product.mainImage,
                 isFavorite = favorites.map { it.id }.contains(product.id),
-                inCart = false
+                inCart = carts.map { it.id }.contains(product.id),
+                count = product.count
             )
         }
     }
@@ -110,11 +123,46 @@ class ProductRepositoryImpl @Inject constructor(
         return favoriteItemDao.getFavoriteList().map { it.map { it.id }.contains(id) }
     }
 
+    override suspend fun getBaseUIItemList(): Flow<List<BaseUIModel>> {
+        return flowOf(mutableListOf<BaseUIModel>())
+    }
+
     override suspend fun getFavoriteList(): Flow<List<ProductFavorite>> {
-        return favoriteItemDao.getFavoriteList()
+        return combine(
+            favoriteItemDao.getFavoriteList(),
+            getCartList()
+        ) { favorite, carts ->
+            favorite.map {
+                ProductFavorite(
+                    id = it.id,
+                    name = it.name,
+                    details = it.details,
+                    size = it.size,
+                    colour = it.colour,
+                    price = it.price,
+                    count = it.count,
+                    mainImage = it.mainImage,
+                    isFavorite = it.isFavorite,
+                    inCart = carts.map { cart -> cart.id }.contains(it.id)
+                )
+            }
+        }
     }
 
     override suspend fun getCartList(): Flow<List<ProductsInCarts>> {
         return favoriteItemDao.getCartList()
+    }
+
+    override suspend fun postLogin(email: String, password: String): Flow<LoginResponse> {
+        return flowOf(apiService.postLogin(LoginParam(email, password))).map {
+            LoginResponse(
+                email = it.email,
+                password = it.password,
+            )
+        }
+    }
+
+    override suspend fun postRegister(fullName: String, email: String, password: String): LoginResponse {
+        return apiService.postRegister(RegisterPara(fullName, email, password))
     }
 }

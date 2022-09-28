@@ -21,3 +21,8 @@ value class DetailsResponse(
     val flow: Flow<List<BaseUIModel>>
 )
 
+@JvmInline
+value class BaseUIResponse(
+    val list: Flow<List<BaseUIModel>>
+)
+

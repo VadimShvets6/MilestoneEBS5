@@ -13,9 +13,10 @@ data class ProductEntity(
     val size: String,
     val colour: String,
     val price: Int,
+    val count: Int,
     val mainImage: String,
     val isFavorite: Boolean,
-    val inCart : Boolean
+    val inCart: Boolean
 )
 
 @JsonClass(generateAdapter = true)
@@ -28,7 +29,9 @@ data class ProductFavorite(
     val colour: String,
     val price: Int,
     val mainImage: String,
-    val isFavorite: Boolean
+    val isFavorite: Boolean,
+    val inCart: Boolean,
+    val count: Int
 )
 
 @JsonClass(generateAdapter = true)
@@ -40,6 +43,8 @@ data class ProductsInCarts(
     val size: String,
     val colour: String,
     val price: Int,
+    val count: Int,
     val mainImage: String,
-    val inCart : Boolean
+    val isFavorite: Boolean,
+    val inCart: Boolean,
 )

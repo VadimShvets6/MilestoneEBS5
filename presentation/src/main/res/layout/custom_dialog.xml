@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/_24sdp"
+    android:layout_marginEnd="@dimen/_24sdp"
+    android:background="@android:color/transparent"
+    android:backgroundTint="@android:color/transparent"
+    android:layout_gravity="center">
+
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@android:color/transparent"
+        android:backgroundTint="@android:color/transparent"
+        android:orientation="vertical">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="4dp"
+            android:layout_marginTop="32dp"
+            android:id="@+id/congratulation_card"
+            app:cardBackgroundColor="#FAFAFA"
+            app:cardElevation="0dp"
+            android:layout_gravity="bottom">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:id="@+id/title"
+                    android:textSize="@dimen/_16ssp"
+                    android:textColor="@android:color/primary_text_light"
+                    android:layout_marginTop="48dp"
+                    android:text="@string/password_strength"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginLeft="32dp"
+                    android:textSize="@dimen/text_size_small_11_ssp"
+                    android:layout_marginRight="32dp"
+                    android:id="@+id/message"
+                    android:gravity="center"
+                    android:text="@string/the_password_must_be_one_capital_letter_one_number_one_symbol_amp"
+                    />
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/create_a_password"
+                    android:id="@+id/read_btn"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:textSize="@dimen/text_size_small_11_ssp"
+                    android:layout_marginBottom="16dp"
+                    android:textColor="@android:color/white"
+                    android:backgroundTint="@color/bg_snack_green"
+                    />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <ImageView
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:padding="@dimen/_2sdp"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/ic_info"
+            android:background="@drawable/circular_tick"
+            android:layout_gravity="center_horizontal|top" />
+
+    </FrameLayout>
+</LinearLayout>

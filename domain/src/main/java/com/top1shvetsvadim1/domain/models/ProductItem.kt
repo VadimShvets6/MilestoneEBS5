@@ -19,6 +19,7 @@ data class ProductItem(
     val mainImage: String,
     @Json(name = "id")
     val id: Int,
-    val isFavorite : Boolean = false,
-    val inCart : Boolean = false
+    val isFavorite: Boolean = false,
+    val inCart: Boolean = false,
+    val count: Int = 1
 )
