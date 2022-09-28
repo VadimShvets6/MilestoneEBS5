@@ -72,6 +72,7 @@ class ItemSeparatorDelegate : ItemDelegate<ItemSeparatorUIModel, ItemSeparatorDe
 
         fun setTextSize(@DimenRes size: Int) {
             val textSize = context.resources.getDimension(size)
+            //TODO: wrong unit.
             binding.separatorText.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize)
         }
 

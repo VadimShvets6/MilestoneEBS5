@@ -57,6 +57,7 @@ class CartFragment : BaseFragment<CartState, CartEvent, CartViewModel, FragmentC
                 cartAdapter.submitList(it)
             }
         }
+        //TODO: remove onScrollListener on destroyView
         binding.rvListCart.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 if (dy > 2) {

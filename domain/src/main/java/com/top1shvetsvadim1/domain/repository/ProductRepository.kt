@@ -7,6 +7,7 @@ import com.top1shvetsvadim1.domain.models.ProductFavorite
 import com.top1shvetsvadim1.domain.models.ProductsInCarts
 import kotlinx.coroutines.flow.Flow
 
+//TODO: consider to make fav, cart and main repos
 interface ProductRepository {
     suspend fun getProductList(filter: String = ""): Flow<List<ProductEntity>>
     suspend fun addProductItemToFavorite(id: Int)
@@ -19,6 +20,8 @@ interface ProductRepository {
     suspend fun addProductItemToCart(id: Int)
     suspend fun getBaseUIItemList(): Flow<List<BaseUIModel>>
     suspend fun removeProductItemFromCart(id: Int)
+
+    //TODO: AuthRepository
     suspend fun postLogin(email: String, password: String): Flow<LoginResponse>
     suspend fun postRegister(fullName: String, email: String, password: String): LoginResponse
 }

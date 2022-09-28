@@ -47,6 +47,7 @@ class DetailFragment : BaseFragment<DetailState, DetailEvent, DetailViewModel, F
     }
 
 
+    //TODO: old todo
     //TODO: Move error handling in base fragment
     override fun handleEffect(effect: DetailEvent) {
         when (effect) {
@@ -70,11 +71,14 @@ class DetailFragment : BaseFragment<DetailState, DetailEvent, DetailViewModel, F
 
     override fun render(state: DetailState) {
         binding.progressBar.isVisible = state.isLoading
+        //TODO: one time actions should be in separate function called once in onViewCreated
         binding.toolbar.setActivatedRightImage(state.isFavorite)
+        //TODO: are you sure there should be coroutine
         lifecycleScope.launchIO {
             detailAdapter.submitList(state.item)
         }
         binding.buyNow.text = state.text
+        //TODO: onClickListeners should be not in render
         with(binding) {
             setupOnClickListeners()
             toolbar.setClickOnRightImage {

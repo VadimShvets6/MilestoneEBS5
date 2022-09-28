@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.res.TypedArray
 import android.util.AttributeSet
 
+//TODO: TYPO!!
 typealias Stylable = R.styleable
 typealias Drawable = R.drawable
 typealias Colors = R.color

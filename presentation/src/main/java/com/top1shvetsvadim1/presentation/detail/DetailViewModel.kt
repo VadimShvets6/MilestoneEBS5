@@ -41,6 +41,7 @@ class DetailViewModel @Inject constructor(
                 checkIfItemIsFavorite(action.id)
             }
             is DetailIntent.ChangeStateItem -> {
+                //TODO: flow of boolean instead of checkIfItemIsFavorite
                 changeStateItem(action.id)
                 checkIfItemIsFavorite(action.id)
             }
@@ -117,6 +118,7 @@ class DetailViewModel @Inject constructor(
             )
         }
 
+        //TODO:
         //TODO: try to create generic error events.
         override suspend fun onError(error: Exception) {
             Log.d("OnError", "$error")
@@ -145,6 +147,7 @@ class DetailViewModel @Inject constructor(
                         isLoading = false,
                     )
                 )
+                //TODO:
                 //TODO: consider to use inline classes for primitives in responses.
                 is Boolean -> sendState(
                     currentState.copy(

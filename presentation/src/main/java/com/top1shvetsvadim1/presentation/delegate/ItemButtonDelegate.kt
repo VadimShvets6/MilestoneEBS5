@@ -58,6 +58,7 @@ class ItemButtonDelegate : ItemDelegate<ItemButtonUIModel, ItemButtonDelegate.It
         holder.setOnClickListeners(item)
     }
 
+    //TODO: format
     inner class ItemButtonViewHolder(private val binding: ItemButtonBinding) :
         BaseViewHolder<ItemButtonUIModel>(binding) {
         private val context get() = itemView.context

@@ -59,6 +59,7 @@ class FavoriteFragment :
                 favoriteAdapter.submitList(it)
             }
         }
+        //TODO: clicker in render
         binding.toolbar.setClickOnLeftImage {
             popBack()
         }

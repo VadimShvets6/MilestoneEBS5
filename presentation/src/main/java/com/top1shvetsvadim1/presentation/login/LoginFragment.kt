@@ -48,6 +48,7 @@ class LoginFragment : BaseFragment<LoginState, LoginEvent, LoginViewModel, Fragm
         .setActionProcessor(::onLoginClick)
         .buildIn()
 
+    //TODO: direct access to dataStore from fragment is prohibited
     private val preferences by lazy {
         requireContext().dataStore.data
     }
@@ -105,6 +106,9 @@ class LoginFragment : BaseFragment<LoginState, LoginEvent, LoginViewModel, Fragm
         }
     }
 
+    //TODO: !!!
+    //1. Violates encapsulation in OOP
+    //2. Violates Single responsibility (S) in SOLID
     private fun updateUI(account: GoogleSignInAccount) {
         val credential = GoogleAuthProvider.getCredential(account.idToken, null)
         firebaseAuth.signInWithCredential(credential).addOnSuccessListener {
@@ -157,6 +161,7 @@ class LoginFragment : BaseFragment<LoginState, LoginEvent, LoginViewModel, Fragm
 
     override fun render(state: LoginState) {
         binding.progressBar.isVisible = state.isLoading
+        //TODO: unnecessary coroutine
         lifecycleScope.launchWhenResumed {
             loginAdapter.submitList(state.items)
         }

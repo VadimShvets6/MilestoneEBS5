@@ -28,12 +28,14 @@ class CustomButton @JvmOverloads constructor(
 
         viewBinding.apply {
             cartButtonInBottomBar.setImageResource(
+                //TODO: wrong default value. If I do not put any value in left image, there should be no image.
                 attr.getResourceId(
                     Stylable.CustomButton_leftImage,
                     Drawable.ic_buschet
                 )
             )
             middleText.text = attr.getString(Stylable.CustomButton_centerText)
+            //TODO: right image - string?
             cartText.text = attr.getString(Stylable.CustomButton_rightImage)
 
         }

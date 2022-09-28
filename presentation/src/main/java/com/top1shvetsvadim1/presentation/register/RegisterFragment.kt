@@ -5,6 +5,7 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import androidx.core.widget.addTextChangedListener
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.fragment.app.viewModels
@@ -61,6 +62,7 @@ class RegisterFragment : BaseFragment<RegisterState, RegisterEvent, RegisterView
         }
     }
 
+    //TODO: same as in login
     private fun registerAccount(fullName: String, email: String, password: String) {
         if (fullName.isNotBlank() && email.isNotBlank() && password.isNotBlank()) {
             auth.createUserWithEmailAndPassword(email, password)
@@ -98,6 +100,8 @@ class RegisterFragment : BaseFragment<RegisterState, RegisterEvent, RegisterView
     }
 
     private fun resetErrors() {
+
+        //TODO: try version with (Editable?) -> Unit
         binding.fullName.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {

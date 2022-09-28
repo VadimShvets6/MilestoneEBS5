@@ -9,6 +9,7 @@ import com.top1shvetsvadim1.presentation.databinding.CustomDialogBinding
 
 class CustomDialog(context: Context) : Dialog(context) {
 
+    //TODO: dialogs views
     private val binding by lazy {
         CustomDialogBinding.inflate(layoutInflater)
     }
@@ -27,6 +28,7 @@ class CustomDialog(context: Context) : Dialog(context) {
         }
     }
 
+    //TODO: same as in previous.
     override fun onBackPressed() {
         dismiss()
     }

@@ -65,6 +65,7 @@ class FavoriteViewModel @Inject constructor(
         }
 
         override suspend fun onError(error: Exception) {
+            //TODO: do something :D
             //Do nothing
         }
 
@@ -76,6 +77,7 @@ class FavoriteViewModel @Inject constructor(
                         isLoading = false
                     )
                 )
+                //TODO: Unit types should not be in payload
                 Unit -> sendState(
                     currentState.copy(isLoading = false)
                 )

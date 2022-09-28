@@ -50,6 +50,18 @@ class DetailProductDelegate :
         }
     }
 
+    //TODO: you should format long constructors like:
+    /*inner class DetailProductViewHolder(
+        private val binding: DetailProductItemBinding
+    ) : BaseViewHolder<DetailProductUIModel>(binding) {
+
+        override fun bind(item: DetailProductUIModel) {
+            setName(item.name)
+            setPrice(item.price)
+            setSize(item.size)
+        }*/
+
+
     inner class DetailProductViewHolder(private val binding: DetailProductItemBinding) :
         BaseViewHolder<DetailProductUIModel>(binding) {
         override fun bind(item: DetailProductUIModel) {

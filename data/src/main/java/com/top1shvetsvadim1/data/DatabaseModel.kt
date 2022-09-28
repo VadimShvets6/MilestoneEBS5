@@ -22,6 +22,7 @@ object DatabaseModel {
         AppDatabase::class.java,
         DB_NAME
     ).fallbackToDestructiveMigration().build()
+    //TODO: consider to not user destructive migration while holding user data.
 
     @Singleton
     @Provides

@@ -123,6 +123,7 @@ class ProductRepositoryImpl @Inject constructor(
         return favoriteItemDao.getFavoriteList().map { it.map { it.id }.contains(id) }
     }
 
+    //TODO: Remove explicit type arguments
     override suspend fun getBaseUIItemList(): Flow<List<BaseUIModel>> {
         return flowOf(mutableListOf<BaseUIModel>())
     }

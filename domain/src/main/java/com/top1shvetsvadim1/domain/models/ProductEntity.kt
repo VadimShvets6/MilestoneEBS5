@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.squareup.moshi.JsonClass
 
-
+//TODO: Do you really need these 3 models?
 @JsonClass(generateAdapter = true)
 data class ProductEntity(
     val id: Int,

@@ -14,6 +14,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Named
 import javax.inject.Singleton
 
+//TODO: put in in proper package
 @Module
 @InstallIn(SingletonComponent::class)
 class NetworkModule {

@@ -12,6 +12,7 @@ class CustomDialogSale(
     context: Context
 ) : Dialog(context) {
 
+    //TODO: unnecessary lazy initialization
     private val binding by lazy {
         DialogSaleBinding.inflate(layoutInflater)
     }
@@ -22,6 +23,7 @@ class CustomDialogSale(
         window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
     }
 
+    //TODO: should not be accessible externally. You should pass this values in constructor.
     fun createDialog(title: String, message: String, id: Int, icon: String, onClick: (Int) -> Unit) {
         binding.title.text = title
         binding.message.text = message
@@ -34,6 +36,7 @@ class CustomDialogSale(
         }
     }
 
+    //TODO: dialog should be either cancelable (with back pressed) either not.
     override fun onBackPressed() {
         dismiss()
     }

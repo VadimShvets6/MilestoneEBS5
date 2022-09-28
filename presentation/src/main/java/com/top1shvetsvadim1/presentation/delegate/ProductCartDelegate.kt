@@ -3,10 +3,7 @@ package com.top1shvetsvadim1.presentation.delegate
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import coil.load
-import com.flexeiprata.novalles.annotations.AutoBindViewHolder
-import com.flexeiprata.novalles.annotations.Instruction
-import com.flexeiprata.novalles.annotations.PrimaryTag
-import com.flexeiprata.novalles.annotations.UIModel
+import com.flexeiprata.novalles.annotations.*
 import com.flexeiprata.novalles.interfaces.Instructor
 import com.flexeiprata.novalles.interfaces.Novalles
 import com.squareup.moshi.JsonClass
@@ -17,6 +14,7 @@ import com.top1shvetsvadim1.coreutils.ItemDelegate
 import com.top1shvetsvadim1.presentation.databinding.ProductCartItemBinding
 import java.util.*
 
+//TODO: better to place primary tag as first value
 @JsonClass(generateAdapter = true)
 @UIModel
 data class ProductCartUIModel(

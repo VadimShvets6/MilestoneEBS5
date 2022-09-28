@@ -41,6 +41,7 @@ class MainActivity : AppCompatActivity() {
     private var navController: NavController? = null
     var isReady = false
 
+    //TODO: too many lazy values. Consider to initialize them where it is possible.
     private val auth by lazy {
         FirebaseAuth.getInstance()
     }
@@ -49,6 +50,7 @@ class MainActivity : AppCompatActivity() {
         CustomDialogSale(this)
     }
 
+    //TODO: put receiver in a separate file
     private val pushBroadcastReceiver by lazy {
         object : BroadcastReceiver() {
             override fun onReceive(p0: Context?, intent: Intent?) {

@@ -37,6 +37,7 @@ data class ItemText(
 @AutoBindViewHolder(ItemTextDelegate.ItemTextViewHolder::class)
 class ItemTextInstructor : Instructor
 
+//TODO: old todo
 //TODO TEST(ItemText)
 class ItemTextDelegate : ItemDelegate<ItemText, ItemTextDelegate.ItemTextViewHolder>(
     ItemText::class
@@ -63,6 +64,7 @@ class ItemTextDelegate : ItemDelegate<ItemText, ItemTextDelegate.ItemTextViewHol
             setColor(item.color)
             setFont(item.font)
             setOnClickListener(item.tag)
+            //TODO: unnecessary safe unwrapping
             item.iconStart?.let { setIconStart(it) }
         }
 
@@ -90,6 +92,11 @@ class ItemTextDelegate : ItemDelegate<ItemText, ItemTextDelegate.ItemTextViewHol
             val typeface = ResourcesCompat.getFont(context, fontFamily)
             binding.informationText.typeface = typeface
         }
+
+        //TODO: your base class has setOnClickListeners function
+        /*override fun setOnClickListeners(item: ItemText) {
+            super.setOnClickListeners(item)
+        }*/
 
         fun setOnClickListener(itemId: Int) {
             binding.root.setOnClickListener {

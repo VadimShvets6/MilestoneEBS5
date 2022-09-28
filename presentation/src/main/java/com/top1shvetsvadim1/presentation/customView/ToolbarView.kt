@@ -30,6 +30,7 @@ class ToolbarView @JvmOverloads constructor(
         val attr: TypedArray =
             getTypedArray(context, attrs, Stylable.Toolbar)
 
+        //TODO: be sure that you can put no value in any of styles and it does not crash after that.
         viewBinding.apply {
             leftIcon.setImageResource(
                 attr.getResourceId(

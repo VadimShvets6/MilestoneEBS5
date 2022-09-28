@@ -16,13 +16,15 @@ import com.top1shvetsvadim1.domain.models.Filters
 import com.top1shvetsvadim1.presentation.databinding.BootomSheetBinding
 import com.top1shvetsvadim1.presentation.delegate.ItemTextDelegate
 
-
+//TODO: put in proper file. It is not a custom view.
 class BottomSheetFilter(
     context: Context,
+    //TODO: you can provide style directly in super constructor.
     @StyleRes style: Int,
     val onFilterPressed: (Filters) -> Unit
 ) : BottomSheetDialog(context, style) {
 
+    //TODO: dialogs has no lifecycle of views, so you can create binding directly in init phase.
     private val binding: BootomSheetBinding by lazy {
         BootomSheetBinding.inflate(layoutInflater)
     }
@@ -67,10 +69,12 @@ class BottomSheetFilter(
         window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
     }
 
+    //TODO: unnecessary function
     fun showDialog() {
         show()
     }
 
+    //TODO: encapsulate data in your constructor.
     fun setList(list: List<BaseUIModel>) {
         filterAdapter.submitList(list)
     }

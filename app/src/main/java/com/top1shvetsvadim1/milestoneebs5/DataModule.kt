@@ -9,6 +9,7 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 
+//TODO: put in in proper package
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class DataModule {

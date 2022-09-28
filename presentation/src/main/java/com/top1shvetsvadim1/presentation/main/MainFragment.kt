@@ -36,6 +36,7 @@ class MainFragment : BaseFragment<MainState, MainEvent, MainViewModel, FragmentM
     private val bottomSheet by lazy {
         BottomSheetFilter(requireContext(), com.top1shvetsvadim1.coreui.R.style.BottomSheetDialogTheme) {
             when (it) {
+                //TODO: you should pass arg as enum until sending it to API
                 Filters.PRICE -> viewModel.handleAction(MainIntent.LoadItems(it.name.lowercase()))
                 Filters.SIZE -> viewModel.handleAction(MainIntent.LoadItems(it.name.lowercase()))
                 Filters.COLOR -> viewModel.handleAction(MainIntent.LoadItems(it.name.lowercase()))
@@ -121,6 +122,7 @@ class MainFragment : BaseFragment<MainState, MainEvent, MainViewModel, FragmentM
             }
             bottomSheet.setList(state.itemsFilter)
         }
+        //TODO: clickers in render
         binding.toolbar.setClickOnRightImage {
             navigateTo(MainFragmentDirections.actionMainFragmentToFavoriteFragment())
         }

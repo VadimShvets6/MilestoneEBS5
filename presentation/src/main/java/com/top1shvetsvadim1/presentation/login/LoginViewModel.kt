@@ -44,6 +44,7 @@ class LoginViewModel @Inject constructor(
     }
 
     private fun loadItems() {
+        //TODO: strange Use Case. You should get scenario or necessary info, not UIModels
         getLoginItemListUseCase.run(summoner = this) {
             it.map {
                 mutableListOf<BaseUIModel>().apply {
