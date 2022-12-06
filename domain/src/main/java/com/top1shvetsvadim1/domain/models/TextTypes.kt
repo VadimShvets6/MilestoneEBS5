@@ -3,7 +3,6 @@ package com.top1shvetsvadim1.domain.models
 import android.widget.TextView
 import androidx.annotation.StringRes
 
-//TODO TEST(ItemText)
 sealed class TextTypes {
     data class ResText(@StringRes val text: Int) : TextTypes()
 

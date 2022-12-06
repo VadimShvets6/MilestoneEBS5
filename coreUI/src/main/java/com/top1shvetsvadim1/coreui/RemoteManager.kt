@@ -8,11 +8,8 @@ import com.google.firebase.remoteconfig.ktx.remoteConfig
 import com.google.firebase.remoteconfig.ktx.remoteConfigSettings
 import kotlinx.coroutines.channels.Channel
 
-//TODO: move to app module
 object RemoteManager {
-    //TODO: insert init function (if necessary)
-    //TODO: create fetch function, where you save data to data store, function returns MAP, not values
-    val remoteConfig: FirebaseRemoteConfig = Firebase.remoteConfig
+    private val remoteConfig: FirebaseRemoteConfig = Firebase.remoteConfig
 
     suspend fun fetch(): Map<String, FirebaseRemoteConfigValue> {
         val value = Channel<Map<String, FirebaseRemoteConfigValue>>(capacity = Channel.RENDEZVOUS)

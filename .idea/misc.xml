@@ -8,6 +8,7 @@
         <entry key="..\:/KotlinAndroid/MilestoneEBS5/app/src/main/res/drawable/ic_launcher_background.xml" value="0.21" />
         <entry key="..\:/KotlinAndroid/MilestoneEBS5/app/src/main/res/drawable/ic_logo.xml" value="0.105" />
         <entry key="..\:/KotlinAndroid/MilestoneEBS5/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
+        <entry key="..\:/KotlinAndroid/MilestoneEBS5/app/src/main/res/layout/fragment_activity.xml" value="0.1796875" />
         <entry key="..\:/KotlinAndroid/MilestoneEBS5/coreUI/src/main/res/drawable/add_to_favorite_selector.xml" value="0.158" />
         <entry key="..\:/KotlinAndroid/MilestoneEBS5/coreUI/src/main/res/drawable/animated_selector.xml" value="0.159" />
         <entry key="..\:/KotlinAndroid/MilestoneEBS5/coreUI/src/main/res/drawable/animated_selector_buschet.xml" value="0.1655" />
@@ -19,6 +20,7 @@
         <entry key="..\:/KotlinAndroid/MilestoneEBS5/coreUI/src/main/res/drawable/button_favorite.xml" value="0.1755" />
         <entry key="..\:/KotlinAndroid/MilestoneEBS5/coreUI/src/main/res/drawable/circular_tick.xml" value="0.1705" />
         <entry key="..\:/KotlinAndroid/MilestoneEBS5/coreUI/src/main/res/drawable/divider_drawable.xml" value="0.1705" />
+        <entry key="..\:/KotlinAndroid/MilestoneEBS5/coreUI/src/main/res/drawable/fade_in.xml" value="0.17" />
         <entry key="..\:/KotlinAndroid/MilestoneEBS5/coreUI/src/main/res/drawable/hear_button.xml" value="0.1785" />
         <entry key="..\:/KotlinAndroid/MilestoneEBS5/coreUI/src/main/res/drawable/ic_arrow_back.xml" value="0.1845" />
         <entry key="..\:/KotlinAndroid/MilestoneEBS5/coreUI/src/main/res/drawable/ic_baseline_bike_scooter_24.xml" value="0.207" />
@@ -39,6 +41,7 @@
         <entry key="..\:/KotlinAndroid/MilestoneEBS5/coreUI/src/main/res/drawable/ic_state_active.xml" value="0.1655" />
         <entry key="..\:/KotlinAndroid/MilestoneEBS5/coreUI/src/main/res/drawable/ic_user.xml" value="0.207" />
         <entry key="..\:/KotlinAndroid/MilestoneEBS5/coreUI/src/main/res/drawable/raunded_textview_cart.xml" value="0.1845" />
+        <entry key="..\:/KotlinAndroid/MilestoneEBS5/coreUI/src/main/res/drawable/slide_up.xml" value="0.17" />
         <entry key="..\:/KotlinAndroid/MilestoneEBS5/coreUI/src/main/res/drawable/tv_circle.xml" value="0.1845" />
         <entry key="..\:/KotlinAndroid/MilestoneEBS5/coreUI/src/main/res/drawable/tv_circle_white.xml" value="0.1845" />
         <entry key="..\:/KotlinAndroid/MilestoneEBS5/coreUI/src/main/res/font/open_sans_semibold.xml" value="0.284375" />
@@ -46,6 +49,17 @@
         <entry key="..\:/KotlinAndroid/MilestoneEBS5/coreUI/src/main/res/menu/menu.xml" value="0.25416666666666665" />
         <entry key="..\:/KotlinAndroid/MilestoneEBS5/coreUI/src/main/res/menu/user_menu.xml" value="0.25416666666666665" />
         <entry key="..\:/KotlinAndroid/MilestoneEBS5/coreUI/src/main/res/xml/remote_config_defaults.xml" value="0.4814453125" />
+        <entry key="..\:/KotlinAndroid/MilestoneEBS5/feature-auth/src/main/res/layout/fragment_login.xml" value="0.25416666666666665" />
+        <entry key="..\:/KotlinAndroid/MilestoneEBS5/feature-auth/src/main/res/layout/fragment_login2.xml" value="0.12604166666666666" />
+        <entry key="..\:/KotlinAndroid/MilestoneEBS5/feature-auth/src/main/res/layout/fragment_logins.xml" value="0.253125" />
+        <entry key="..\:/KotlinAndroid/MilestoneEBS5/feature-auth/src/main/res/layout/fragment_register.xml" value="0.25416666666666665" />
+        <entry key="..\:/KotlinAndroid/MilestoneEBS5/feature-auth/src/main/res/layout/fragment_sign_in.xml" value="0.1" />
+        <entry key="..\:/KotlinAndroid/MilestoneEBS5/feature-auth/src/main/res/layout/item_button.xml" value="0.25416666666666665" />
+        <entry key="..\:/KotlinAndroid/MilestoneEBS5/feature-auth/src/main/res/layout/item_separator.xml" value="0.25416666666666665" />
+        <entry key="..\:/KotlinAndroid/MilestoneEBS5/feature-auth/src/main/res/layout/text_item.xml" value="0.25416666666666665" />
+        <entry key="..\:/KotlinAndroid/MilestoneEBS5/feature-auth/src/main/res/layout/toolbar.xml" value="0.25416666666666665" />
+        <entry key="..\:/KotlinAndroid/MilestoneEBS5/feature-main/src/main/res/layout/fragment_login.xml" value="0.25416666666666665" />
+        <entry key="..\:/KotlinAndroid/MilestoneEBS5/feature-main/src/main/res/layout/fragment_main.xml" value="0.24010416666666667" />
         <entry key="..\:/KotlinAndroid/MilestoneEBS5/presentation/src/main/res/font/open_sans_semibold.xml" value="0.284375" />
         <entry key="..\:/KotlinAndroid/MilestoneEBS5/presentation/src/main/res/layout/bootom_sheet.xml" value="0.264" />
         <entry key="..\:/KotlinAndroid/MilestoneEBS5/presentation/src/main/res/layout/bottom_sheet_item.xml" value="0.253125" />
@@ -59,14 +73,16 @@
         <entry key="..\:/KotlinAndroid/MilestoneEBS5/presentation/src/main/res/layout/fragment_favorite.xml" value="0.264" />
         <entry key="..\:/KotlinAndroid/MilestoneEBS5/presentation/src/main/res/layout/fragment_login.xml" value="0.25416666666666665" />
         <entry key="..\:/KotlinAndroid/MilestoneEBS5/presentation/src/main/res/layout/fragment_main.xml" value="0.2" />
-        <entry key="..\:/KotlinAndroid/MilestoneEBS5/presentation/src/main/res/layout/fragment_profile.xml" value="0.25416666666666665" />
+        <entry key="..\:/KotlinAndroid/MilestoneEBS5/presentation/src/main/res/layout/fragment_profile.xml" value="0.1" />
         <entry key="..\:/KotlinAndroid/MilestoneEBS5/presentation/src/main/res/layout/fragment_register.xml" value="0.3105263157894737" />
         <entry key="..\:/KotlinAndroid/MilestoneEBS5/presentation/src/main/res/layout/fragment_sign_in.xml" value="0.25416666666666665" />
         <entry key="..\:/KotlinAndroid/MilestoneEBS5/presentation/src/main/res/layout/image_detail_item.xml" value="0.253125" />
-        <entry key="..\:/KotlinAndroid/MilestoneEBS5/presentation/src/main/res/layout/item_button.xml" value="0.72" />
+        <entry key="..\:/KotlinAndroid/MilestoneEBS5/presentation/src/main/res/layout/item_button.xml" value="0.4" />
         <entry key="..\:/KotlinAndroid/MilestoneEBS5/presentation/src/main/res/layout/item_separator.xml" value="0.2" />
-        <entry key="..\:/KotlinAndroid/MilestoneEBS5/presentation/src/main/res/layout/product_cart_item.xml" value="0.264" />
-        <entry key="..\:/KotlinAndroid/MilestoneEBS5/presentation/src/main/res/layout/product_item.xml" value="0.4" />
+        <entry key="..\:/KotlinAndroid/MilestoneEBS5/presentation/src/main/res/layout/product_cart_item.xml" value="0.4" />
+        <entry key="..\:/KotlinAndroid/MilestoneEBS5/presentation/src/main/res/layout/product_grid_item.xml" value="0.253125" />
+        <entry key="..\:/KotlinAndroid/MilestoneEBS5/presentation/src/main/res/layout/product_item.xml" value="0.2" />
+        <entry key="..\:/KotlinAndroid/MilestoneEBS5/presentation/src/main/res/layout/product_item_grid.xml" value="0.264" />
         <entry key="..\:/KotlinAndroid/MilestoneEBS5/presentation/src/main/res/layout/text_item.xml" value="0.31791530944625407" />
         <entry key="..\:/KotlinAndroid/MilestoneEBS5/presentation/src/main/res/layout/toolbar.xml" value="0.264" />
         <entry key="..\:/KotlinAndroid/MilestoneEBS5/presentation/src/main/res/menu/user_menu.xml" value="0.253125" />

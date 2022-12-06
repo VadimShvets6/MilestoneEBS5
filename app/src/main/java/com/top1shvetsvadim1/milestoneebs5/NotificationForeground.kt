@@ -17,10 +17,8 @@ import com.top1shvetsvadim1.coreui.Drawable
 import com.top1shvetsvadim1.milestoneebs5.MyReceiver.Companion.ACTION_FAVROITE
 import com.top1shvetsvadim1.milestoneebs5.MyReceiver.Companion.ACTION_MY_CART
 
-
 class NotificationForeground : Service() {
 
-    //TODO: unnecessary lazy!!
     private val remoteViews by lazy {
         RemoteViews(packageName, com.top1shvetsvadim1.coreui.R.layout.notification_custom)
     }
@@ -74,7 +72,6 @@ class NotificationForeground : Service() {
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
         )
     }
-    //TODO: remove lazy there and ask me for rules to create lazy objects
 
     override fun onCreate() {
         super.onCreate()

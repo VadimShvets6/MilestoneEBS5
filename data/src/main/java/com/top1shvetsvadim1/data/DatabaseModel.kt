@@ -24,6 +24,7 @@ object DatabaseModel {
     ).fallbackToDestructiveMigration().build()
     //TODO: consider to not user destructive migration while holding user data.
 
+
     @Singleton
     @Provides
     fun provideFavoriteDao(db: AppDatabase) = db.favoriteItemDao()

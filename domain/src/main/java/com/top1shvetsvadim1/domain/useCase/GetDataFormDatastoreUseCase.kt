@@ -14,7 +14,6 @@ class GetDataFormDatastoreUseCase @Inject constructor(
     }
 }
 
-//TODO: put it into use case to not mess with other classes. (And in other useCases also)
 data class ParametersRemote(
     val param: Parameters,
     val key: String

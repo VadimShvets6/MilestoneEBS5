@@ -37,8 +37,7 @@ class BaseAdapter private constructor(private val delegates: List<ItemDelegate<B
 
     @Suppress("UNCHECKED_CAST")
     class Builder {
-        private val delegates: MutableList<ItemDelegate<BaseUIModel, BaseViewHolder<BaseUIModel>>> =
-            mutableListOf()
+        private val delegates: MutableList<ItemDelegate<BaseUIModel, BaseViewHolder<BaseUIModel>>> = mutableListOf()
 
         fun setDelegates(vararg delegate: ItemDelegate<out BaseUIModel, out BaseViewHolder<out BaseUIModel>>): Builder {
             delegate.forEach {
@@ -60,12 +59,10 @@ class BaseAdapter private constructor(private val delegates: List<ItemDelegate<B
 
 abstract class ItemDelegate<T : BaseUIModel, H : BaseViewHolder<T>>(
     val clazz: KClass<T>,
-    //instructor: KClass<out Instructor>,
 ) {
 
     val uiModelHelper: UIModelHelper<T> = Novalles.provideUiInterfaceFor(clazz)
 
-    //protected val inspector = Novalles.provideInspectorFromUiModel(instructor as KClass<Instructor>)
 
     fun getOrCreateViewHolder(inflater: LayoutInflater, parent: ViewGroup): H {
         return createViewHolder(inflater, parent)
@@ -78,11 +75,6 @@ abstract class ItemDelegate<T : BaseUIModel, H : BaseViewHolder<T>>(
     abstract fun createViewHolder(inflater: LayoutInflater, parent: ViewGroup): H
 
     open fun onBindViewHolder(holder: H, item: T, payload: MutableList<Any>) {
-//        val instructor = provideInstructor(holder, item, payload)
-//        inspector.inspectPayloads(payload, instructor) {
-//            holder.bind(item)
-//        }
-        // holder.setOnClickListeners(item)
         holder.bind(item)
         holder.setOnClickListeners(item)
     }

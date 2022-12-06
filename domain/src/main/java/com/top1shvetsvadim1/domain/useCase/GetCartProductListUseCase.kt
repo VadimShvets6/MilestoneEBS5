@@ -1,16 +1,18 @@
 package com.top1shvetsvadim1.domain.useCase
 
-import com.top1shvetsvadim1.coreutils.UseCaseNoParams
+import com.top1shvetsvadim1.coreutils.UseCase
+import com.top1shvetsvadim1.domain.models.Filters
 import com.top1shvetsvadim1.domain.models.ProductEntity
 import com.top1shvetsvadim1.domain.models.ProductResponse
-import com.top1shvetsvadim1.domain.repository.ProductRepository
+import com.top1shvetsvadim1.domain.repository.CartRepository
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class GetCartProductListUseCase @Inject constructor(
-    private val repository: ProductRepository
-) : UseCaseNoParams<ProductResponse> {
-    override suspend fun invoke(): ProductResponse = repository.getCartList().map {
+    private val repository: CartRepository
+) : UseCase<Filters, ProductResponse> {
+    override suspend fun invoke(params: Filters): ProductResponse = repository.getCartList(params).map {
         it.map { entity ->
             ProductEntity(
                 name = entity.name,
@@ -29,3 +31,8 @@ class GetCartProductListUseCase @Inject constructor(
         ProductResponse(it)
     }
 }
+
+@JvmInline
+value class CartSize(
+    val size: Flow<Int>
+)

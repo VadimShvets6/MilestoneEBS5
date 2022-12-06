@@ -2,11 +2,12 @@ package com.top1shvetsvadim1.domain.useCase
 
 import com.top1shvetsvadim1.coreutils.UseCase
 import com.top1shvetsvadim1.domain.models.LoginResponse
+import com.top1shvetsvadim1.domain.repository.AuthRepository
 import com.top1shvetsvadim1.domain.repository.ProductRepository
 import javax.inject.Inject
 
 class PostRegisterUseCase @Inject constructor(
-    private val repository: ProductRepository
+    private val repository: AuthRepository
 ) : UseCase<RegisterData, LoginResponse> {
     override suspend fun invoke(params: RegisterData): LoginResponse {
         return repository.postRegister(params.fullName, params.email, params.password)

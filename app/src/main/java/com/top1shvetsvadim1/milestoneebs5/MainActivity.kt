@@ -1,8 +1,5 @@
 package com.top1shvetsvadim1.milestoneebs5
 
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
 import android.content.IntentFilter
 import android.os.Build
 import android.os.Bundle
@@ -12,7 +9,6 @@ import android.view.ViewTreeObserver
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
@@ -20,64 +16,49 @@ import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import com.dolatkia.animatedThemeManager.AppTheme
+import com.dolatkia.animatedThemeManager.ThemeActivity
 import com.google.firebase.auth.FirebaseAuth
+import com.top1shvetsvadim1.coreui.FeatureAuthContract
+import com.top1shvetsvadim1.coreui.FeatureMainContract
+import com.top1shvetsvadim1.coreui.LightTheme
+import com.top1shvetsvadim1.coreui.MyAppTheme
 import com.top1shvetsvadim1.coreutils.launchIO
-import com.top1shvetsvadim1.data.dataStore
+import com.top1shvetsvadim1.data.impl.dataStore
 import com.top1shvetsvadim1.data.service.NotificationFirebase
 import com.top1shvetsvadim1.domain.models.Parameters
+import com.top1shvetsvadim1.feature_main.main.MainFragmentDirections
 import com.top1shvetsvadim1.milestoneebs5.databinding.ActivityMainBinding
-import com.top1shvetsvadim1.presentation.customView.CustomDialogSale
-import com.top1shvetsvadim1.presentation.main.MainFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.map
+import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity : ThemeActivity() {
 
-    private val viewModel: MainActivtyViewModel by viewModels()
+    private val viewModel: MainActivityViewModel by viewModels()
 
-    private var navController: NavController? = null
+    private var navMainController: NavController? = null
+
     var isReady = false
 
-    //TODO: too many lazy values. Consider to initialize them where it is possible.
-    private val auth by lazy {
-        FirebaseAuth.getInstance()
+    private val auth = FirebaseAuth.getInstance()
+
+    override fun getStartTheme(): AppTheme {
+        return LightTheme()
     }
 
-    private val dialog by lazy {
-        CustomDialogSale(this)
+    override fun syncTheme(appTheme: AppTheme) {
+        val myAppTheme = appTheme as MyAppTheme
+        // set background color
+        binding.root.setBackgroundColor(myAppTheme.firstActivityBackgroundColor(this))
     }
 
-    //TODO: put receiver in a separate file
     private val pushBroadcastReceiver by lazy {
-        object : BroadcastReceiver() {
-            override fun onReceive(p0: Context?, intent: Intent?) {
-                val extras = intent?.extras
-                extras?.keySet()?.firstOrNull { it == "action" }?.let { key ->
-                    when (extras.getString(key)) {
-                        "show_message" -> {
-                            val id = extras.getString("id")
-                            val icon = extras.getString("icon")
-                            val name = extras.getString("name")
-                            val size = extras.getString("size")
-                            if (!id.isNullOrBlank() && !icon.isNullOrBlank() && !name.isNullOrBlank() && !size.isNullOrBlank()) {
-                                dialog.createDialog(name, size, id.toInt(), icon) {
-                                    navController?.navigate(
-                                        MainFragmentDirections.actionMainFragmentToDetailFragment(
-                                            it
-                                        )
-                                    )
-                                }
-                            } else {
-                                Log.d("TAG", "Extras null")
-                            }
-                        }
-                        else -> Log.d("TAG", "ERROR")
-                    }
-                }
-            }
+        PushBroadcastReceiver(this) {
+            navMainController?.navigate(MainFragmentDirections.actionMainFragmentToDetailFragment(it))
         }
     }
 
@@ -86,7 +67,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private val currentGraph by lazy {
-        navController?.navInflater?.inflate(com.top1shvetsvadim1.presentation.R.navigation.main_navigation)
+        navMainController?.navInflater?.inflate(R.navigation.nav_main)
     }
 
     private val receiver by lazy {
@@ -109,38 +90,40 @@ class MainActivity : AppCompatActivity() {
             addAction(NotificationFirebase.INTENT_FILTER)
         }
 
+
+        navMainController = navHostFragment.navController
+
         registerReceiver(pushBroadcastReceiver, intentFilter)
         registerReceiver(receiver, intentFilter)
-
-        navController = navHostFragment.navController
 
         getExtras()
         loadInitialData()
         splashScreenDraw()
 
         if (auth.currentUser != null) {
-            currentGraph?.setStartDestination(com.top1shvetsvadim1.presentation.R.id.mainFragment)
+            currentGraph?.setStartDestination(com.top1shvetsvadim1.feature_main.R.id.main_navigation)
+            Log.d("Navigation", "${currentGraph?.id}")
             currentGraph?.let {
-                navController?.setGraph(it, bundleOf())
+                navMainController?.setGraph(it, bundleOf())
             }
         }
     }
 
     private fun getExtras() {
         intent.extras?.getString("id")?.let { id ->
-            currentGraph?.setStartDestination(com.top1shvetsvadim1.presentation.R.id.mainFragment)
+            currentGraph?.setStartDestination(com.top1shvetsvadim1.feature_main.R.id.main_navigation)
             currentGraph?.let {
-                navController?.setGraph(it, bundleOf())
+                navMainController?.setGraph(it, bundleOf())
             }
-            navController?.navigate(MainFragmentDirections.actionMainFragmentToDetailFragment(id.toInt()))
+            navMainController?.navigate(MainFragmentDirections.actionMainFragmentToDetailFragment(id.toInt()))
         }
 
         intent.extras?.getString("Favorites")?.let {
-            currentGraph?.setStartDestination(com.top1shvetsvadim1.presentation.R.id.mainFragment)
+            currentGraph?.setStartDestination(com.top1shvetsvadim1.feature_main.R.id.mainFragment)
             currentGraph?.let {
-                navController?.setGraph(it, bundleOf())
+                navMainController?.setGraph(it, bundleOf())
             }
-            navController?.navigate(MainFragmentDirections.actionMainFragmentToFavoriteFragment())
+            navMainController?.navigate(MainFragmentDirections.actionMainFragmentToFavoriteFragment())
         }
 
         intent.extras?.getString("FireBase")?.let {
@@ -148,27 +131,31 @@ class MainActivity : AppCompatActivity() {
         }
 
         intent.extras?.getString("MyCart")?.let {
-            currentGraph?.setStartDestination(com.top1shvetsvadim1.presentation.R.id.mainFragment)
+            currentGraph?.setStartDestination(com.top1shvetsvadim1.feature_main.R.id.mainFragment)
             currentGraph?.let {
-                navController?.setGraph(it, bundleOf())
+                navMainController?.setGraph(it, bundleOf())
             }
-            navController?.navigate(MainFragmentDirections.actionMainFragmentToCartFragment())
+            navMainController?.navigate(MainFragmentDirections.actionMainFragmentToCartFragment())
         }
 
     }
 
     private fun splashScreenDraw() {
+        Log.d("Navigation", "Current")
         val content: View = findViewById(android.R.id.content)
         content.viewTreeObserver.addOnPreDrawListener(object : ViewTreeObserver.OnPreDrawListener {
             override fun onPreDraw(): Boolean {
                 val context = this
                 return if (auth.currentUser != null) {
+                    Log.d("Navigation", "Current jjj ")
+                    //featureARouteContractImpl.show("as", control)
                     content.viewTreeObserver.removeOnPreDrawListener(context)
                     true
                 } else {
-                    currentGraph?.setStartDestination(com.top1shvetsvadim1.presentation.R.id.loginFragment)
+                     currentGraph?.setStartDestination(com.top1shvetsvadim1.feature_auth.R.id.auth_nav)
+                    Log.d("Navigation", "Current auth ${currentGraph?.startDestDisplayName}")
                     currentGraph?.let {
-                        navController?.setGraph(it, bundleOf())
+                        navMainController?.setGraph(it, bundleOf())
                     }
                     content.viewTreeObserver.removeOnPreDrawListener(context)
                     false

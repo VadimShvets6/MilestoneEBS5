@@ -19,6 +19,7 @@ rootProject.name = "MilestoneEBS5"
 include ':app'
 include ':data'
 include ':domain'
-include ':presentation'
+include ':feature-main'
 include ':coreUI'
 include ':coreUtils'
+include ':feature-auth'

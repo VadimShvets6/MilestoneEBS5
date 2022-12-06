@@ -12,9 +12,8 @@ import com.top1shvetsvadim1.domain.useCase.SaveToDatastoreUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
-//TODO: typo
 @HiltViewModel
-class MainActivtyViewModel @Inject constructor(
+class MainActivityViewModel @Inject constructor(
     private val saveToDatastoreUseCase: SaveToDatastoreUseCase,
 ) : ViewModel() {
 

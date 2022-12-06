@@ -2,16 +2,19 @@ package com.top1shvetsvadim1.coreutils
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
+import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavDirections
+import androidx.navigation.fragment.FragmentNavigator
 import androidx.navigation.fragment.findNavController
 import androidx.viewbinding.ViewBinding
 import com.google.android.material.snackbar.Snackbar
@@ -39,6 +42,8 @@ abstract class BaseFragment<S : ViewState, E : ViewEvent, VM : BaseViewModel<*, 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        postponeEnterTransition()
+        view.doOnPreDraw { startPostponedEnterTransition() }
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 withContext(Dispatchers.Main) {
@@ -75,7 +80,13 @@ abstract class BaseFragment<S : ViewState, E : ViewEvent, VM : BaseViewModel<*, 
     }
 
     abstract fun render(state: S)
-    open fun handleEffect(effect: E) {}
+    open fun handleEffect(effect: E) {
+        when(effect){
+            GeneralEvent.ShowNoInternet -> {
+
+            }
+        }
+    }
 
     abstract fun getViewBinding(inflater: LayoutInflater): VB
 
